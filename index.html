@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EMT midterm drill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EAF0F4;--card:#FFFFFF;--ink:#172636;--muted:#566779;--line:#C7D3DD;
+  --blue:#1C58B5;--blue-soft:#E2EBF9;--on-blue:#FFFFFF;
+  --green:#2B7A4B;--green-soft:#E0F1E6;
+  --yellow:#E2A817;--yellow-soft:#FBF0D2;--on-yellow:#2A1E00;
+  --red:#B5302A;--red-soft:#F8E0DD;--on-tag:#FFFFFF;
+  --sans:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --cond:"Barlow Condensed","Arial Narrow",system-ui,-apple-system,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1720;--card:#15222E;--ink:#E4EBF1;--muted:#93A3B2;--line:#2A3A49;
+    --blue:#6FA2EE;--blue-soft:#1A2D47;--on-blue:#0D1720;
+    --green:#4DB27A;--green-soft:#173326;
+    --yellow:#E9B43A;--yellow-soft:#3A2F12;--on-yellow:#1E1500;
+    --red:#E46A5E;--red-soft:#3D1E1B;--on-tag:#0D1720;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1720;--card:#15222E;--ink:#E4EBF1;--muted:#93A3B2;--line:#2A3A49;
+  --blue:#6FA2EE;--blue-soft:#1A2D47;--on-blue:#0D1720;
+  --green:#4DB27A;--green-soft:#173326;
+  --yellow:#E9B43A;--yellow-soft:#3A2F12;--on-yellow:#1E1500;
+  --red:#E46A5E;--red-soft:#3D1E1B;--on-tag:#0D1720;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--paper)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.45;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+main{max-width:620px;margin:0 auto;padding:22px 18px 0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+h1,h2{font-family:var(--cond);font-weight:700;margin:0;letter-spacing:.005em}
+p{margin:0}
+
+.top{padding:6px 0 18px;border-bottom:2px solid var(--ink);margin-bottom:20px}
+.top h1{font-size:44px;line-height:1;}
+.sub{color:var(--muted);margin-top:10px;max-width:52ch}
+
+.block{margin:0 0 24px}
+.block h2,.h2row h2{font-size:22px;margin-bottom:10px}
+.h2row{display:flex;align-items:baseline;justify-content:space-between}
+.mini{display:flex;gap:14px}
+.help{color:var(--muted);font-size:15px;margin-top:8px}
+
+.seg{display:flex;border:1.5px solid var(--line);border-radius:10px;background:var(--card);padding:3px;gap:3px}
+.seg button{flex:1;border:0;background:transparent;padding:10px 4px;border-radius:7px;font-weight:600;font-size:15px;line-height:1.2;min-height:44px}
+.seg button.on{background:var(--blue);color:var(--on-blue)}
+
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.chip{display:flex;align-items:center;gap:10px;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;min-height:52px;font-size:15px;line-height:1.2;position:relative}
+.chip .num{font-family:var(--cond);font-weight:700;font-size:20px;min-width:30px;color:var(--muted)}
+.chip .nm{flex:1;overflow-wrap:anywhere}
+.chip.on{border-color:var(--blue);background:var(--blue-soft)}
+.chip.on .num{color:var(--blue)}
+.chip:not(.on) .nm{color:var(--muted)}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.dot.g{background:var(--green)}.dot.y{background:var(--yellow)}.dot.r{background:var(--red)}
+
+.link{background:none;border:0;padding:4px 0;color:var(--blue);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.link.quiet{color:var(--muted);font-weight:500}
+.reset{margin:-4px 0 10px}
+.weak{background:var(--red-soft);border-left:5px solid var(--red);padding:12px 14px;border-radius:4px 10px 10px 4px;margin:0 0 22px}
+.weak .link{margin-top:4px}
+
+.dock{position:sticky;bottom:0;margin:20px -18px 0;padding:14px 18px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(to bottom,transparent,var(--paper) 24%)}
+.primary{display:block;width:100%;min-height:54px;border:0;border-radius:12px;background:var(--blue);color:var(--on-blue);font-family:var(--cond);font-size:22px;font-weight:700;letter-spacing:.01em}
+.primary:disabled{background:var(--line);color:var(--muted);cursor:default}
+.ghost{display:block;width:100%;min-height:54px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);font-family:var(--cond);font-size:22px;font-weight:700}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.two .primary,.two .ghost{font-size:20px;white-space:nowrap}
+.dock-hint{text-align:center;color:var(--muted);font-size:15px;padding:16px 0}
+
+.bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.count{font-family:var(--cond);font-weight:700;font-size:19px}
+.progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:18px}
+.progress span{display:block;height:100%;background:var(--blue);transition:width .25s ease}
+.chap{color:var(--muted);font-weight:600;font-size:15px;margin-bottom:6px}
+.q{font-family:var(--sans);font-weight:600;font-size:21px;line-height:1.35;margin:0 0 16px}
+.stem{background:var(--card);border:1.5px solid var(--line);border-left:5px solid var(--blue);border-radius:4px 10px 10px 4px;padding:12px 14px;margin:0 0 14px;font-size:16px}
+.stem-h{font-family:var(--cond);font-weight:700;font-size:18px;margin-bottom:2px}
+
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;min-height:52px;font-size:16.5px;line-height:1.35}
+.opt .let{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-family:var(--cond);font-weight:700;font-size:17px;background:var(--paper);color:var(--muted)}
+.opt .txt{padding-top:2px}
+.opt.sel{border-color:var(--blue);background:var(--blue-soft)}
+.opt.sel .let{background:var(--blue);color:var(--on-blue)}
+.opt.right{border-color:var(--green);background:var(--green-soft)}
+.opt.right .let{background:var(--green);color:var(--on-tag)}
+.opt.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt.wrong .let{background:var(--red);color:var(--on-tag)}
+.opt.dim{opacity:.55}
+.opt:disabled{cursor:default;color:var(--ink)}
+
+.fb{margin-top:14px;padding:12px 14px;border-radius:4px 10px 10px 4px;border-left:5px solid}
+.fb.ok{border-color:var(--green);background:var(--green-soft)}
+.fb.no{border-color:var(--red);background:var(--red-soft)}
+.verdict{font-family:var(--cond);font-weight:700;font-size:20px;margin-bottom:3px}
+
+.answer{background:var(--card);border:1.5px solid var(--line);border-left:5px solid var(--blue);border-radius:4px 10px 10px 4px;padding:14px}
+.ans-h{font-family:var(--cond);font-weight:700;font-size:18px;color:var(--blue);margin-bottom:4px}
+.grade{min-height:54px;border-radius:12px;font-family:var(--cond);font-size:22px;font-weight:700;border:2px solid}
+.grade.miss{border-color:var(--red);background:var(--red-soft)}
+.grade.got{border-color:var(--green);background:var(--green-soft)}
+
+/* Triage tag results */
+.tag{position:relative;margin:4px 0 26px;padding:22px 20px 20px 64px;border-radius:6px 14px 14px 6px;color:var(--on-tag);
+  clip-path:polygon(22px 0,100% 0,100% 100%,22px 100%,0 calc(100% - 22px),0 22px);animation:drop .45s cubic-bezier(.2,.8,.3,1.2) both}
+.tag.g{background:var(--green)}.tag.r{background:var(--red)}.tag.y{background:var(--yellow);color:var(--on-yellow)}
+.tag .hole{position:absolute;left:24px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:50%;background:var(--paper);box-shadow:0 0 0 4px color-mix(in srgb,var(--on-tag) 40%,transparent)}
+.tag-word{font-family:var(--cond);font-weight:700;font-size:22px;line-height:1}
+.tag-score{font-family:var(--cond);font-weight:700;font-size:76px;line-height:.95;margin:4px 0 6px}
+.tag-note{font-weight:500}
+@keyframes drop{from{transform:translateY(-10px) rotate(-1.5deg);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.tag{animation:none}.progress span{transition:none}}
+
+.mtags{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.mtag{display:flex;align-items:center;gap:12px;padding:10px 14px 10px 12px;border-radius:4px 10px 10px 4px;border-left:8px solid;background:var(--card)}
+.mtag.g{border-color:var(--green)}.mtag.y{border-color:var(--yellow)}.mtag.r{border-color:var(--red)}
+.mhole{width:10px;height:10px;border-radius:50%;border:2px solid var(--line);flex:none}
+.mname{flex:1;font-weight:500}
+.mscore{font-family:var(--cond);font-weight:700;font-size:19px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+.missed{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.miss-item{background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:14px}
+.mchap{color:var(--muted);font-size:14px;font-weight:600}
+.mq{font-weight:600;margin:3px 0 8px}
+.yours{color:var(--red);font-size:15.5px}
+.correct{color:var(--green);font-weight:600;font-size:15.5px;margin-top:2px}
+.why{color:var(--muted);font-size:15px;margin-top:6px}
+.clean{color:var(--muted);margin-bottom:10px}
+
+@media (min-width:560px){.top h1{font-size:54px}}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const CH={"1":"EMS Systems","2":"Workforce Safety & Wellness","3":"Medical, Legal & Ethical","4":"Communications & Docs","5":"Medical Terminology","6":"The Human Body","7":"Life Span Development","8":"Lifting & Moving","10":"Patient Assessment","11":"Airway Management","12":"Pharmacology","13":"Shock","14":"BLS Resuscitation","15":"Medical Overview","16":"Respiratory Emergencies","17":"Cardiovascular Emergencies","S":"Patient Scenarios"};
+const ORDER=["1","2","3","4","5","6","7","8","10","11","12","13","14","15","16","17","S"];
+const STEMS={
+A:"A 67-year-old is sitting upright, speaking in two-word phrases. RR 32 and shallow, pulse 118, SpO₂ 86% on room air, diffuse wheezes, and he’s getting more tired.",
+B:"A 24-year-old fell and is pale, cool, and anxious. Pulse 132, BP 94/60, RR 28, with bleeding from the thigh.",
+C:"A 58-year-old has had chest pressure for 20 minutes with nausea and sweating. Pulse 104, BP 148/90, RR 22, SpO₂ 96% on room air."
+};
+// o[0] is always the correct answer; options are shuffled at runtime.
+const MCQ=[
+{c:"1",q:"What is the main role of the EMS medical director?",o:["Physician who authorizes EMTs’ field care and oversees it through protocols and quality review","Supervisor who assigns ambulances and shift schedules","Hospital charge nurse who receives radio reports","Dispatcher who decides which calls get a response"],e:"The medical director is the physician whose oversight makes EMT field care possible: protocols, standing orders, and quality improvement."},
+{c:"1",q:"Your protocol lets you give oral glucose to a conscious hypoglycemic patient without calling anyone first. This is an example of:",o:["Standing orders (off-line medical direction)","Online medical direction","Implied consent","Acting outside scope of practice"],e:"Standing orders are pre-authorized in written protocols. Online direction means real-time contact (radio or phone) with medical control."},
+{c:"1",q:"You radio the physician at medical control to ask permission for a treatment. This is:",o:["Online medical direction","A standing order","A protocol deviation","Retrospective quality review"],e:"Online means live, real-time contact with medical control. Standing orders don’t require a call."},
+{c:"1",q:"Before EMS arrives, an emergency medical dispatcher may:",o:["Give pre-arrival instructions such as CPR coaching","Authorize a patient’s refusal of care","Provide online medical direction for EMT treatments","Determine the patient’s hospital diagnosis"],e:"Dispatchers send the right resources and can coach callers through CPR, bleeding control, and similar pre-arrival steps."},
+{c:"1",q:"Which is a recognized EMS system quality goal?",o:["Evidence-based care","Transporting every patient by the fastest route regardless of destination","Minimizing documentation to save time","Avoiding contact with medical control"],e:"Quality goals include evidence-based, accessible, and preventive care plus complete patient records."},
+
+{c:"2",q:"You arrive at a car crash on a busy highway. What is your first priority?",o:["Your own and your crew’s safety","Opening the patient’s airway","Counting the number of patients","Calling medical control"],e:"Scene safety comes first. An injured EMT can’t help anyone and becomes another patient."},
+{c:"2",q:"Standard precautions are based on the idea that:",o:["All blood and body fluids should be treated as potentially infectious","Only patients with a known infection need PPE","Gloves alone protect against every exposure","PPE is optional when the patient looks healthy"],e:"Treat every patient’s body fluids as potentially infectious and choose PPE based on the expected exposure."},
+{c:"2",q:"A patient is actively vomiting and coughing. Which PPE is most appropriate?",o:["Gloves, eye protection, and a mask (gown if splashing is likely)","Gloves only","A mask only","No PPE is needed for vomit"],e:"Match PPE to the exposure. Splash risk to the face means eye and face protection in addition to gloves."},
+{c:"2",q:"Midway through care, a crowd becomes hostile and threatening. You should:",o:["Get to safety (with the patient if possible) and request law enforcement","Keep treating and ignore the crowd","Argue with the crowd to calm them down","Leave the scene without notifying anyone"],e:"Scene safety is reassessed throughout the call. If it turns unsafe, get to safety, notify dispatch, and get help."},
+{c:"2",q:"Which is a healthy way to manage occupational stress?",o:["Peer support, adequate sleep, and regular exercise","Picking up extra overtime to stay busy","Using alcohol to unwind after shifts","Avoiding friends and family to recover"],e:"Healthy strategies: rest, peer support, balance, reduced overtime, and professional help when needed."},
+{c:"2",q:"Which pair are common signs of occupational stress?",o:["Irritability and sleep disturbance","Increased appetite and sharper focus","Better sleep and calmness","More energy and patience"],e:"Watch for irritability, sleep problems, withdrawal, and trouble concentrating."},
+
+{c:"3",q:"An unresponsive adult is found after a crash. You treat under:",o:["Implied consent","Expressed consent","Informed refusal","No consent is needed for adults"],e:"Implied consent assumes a patient who can’t consent would want emergency care."},
+{c:"3",q:"An alert adult says, “Yes, please check my blood pressure.” This is:",o:["Expressed consent","Implied consent","Informed refusal","Assumed consent"],e:"Expressed consent: the patient knowingly agrees, verbally or by action."},
+{c:"3",q:"A competent adult refuses transport. Which is the best course?",o:["Confirm capacity, explain the risks, encourage care, involve medical control per policy, and document with signatures/witnesses","Transport anyway because it’s in their best interest","Leave immediately to avoid liability","Have a family member sign consent for them"],e:"A competent adult has the right to refuse. Your job is to make sure the refusal is informed and well documented."},
+{c:"3",q:"Which is NOT one of the four elements of negligence?",o:["Intent to harm","Duty to act","Breach of duty","Causation"],e:"Negligence = duty, breach of duty, damages, and causation. Intent isn’t required."},
+{c:"3",q:"You stop care and leave a patient without transferring them to someone of equal or higher training. This is:",o:["Abandonment","Implied consent","Expressed consent","Scope of practice"],e:"Abandonment is ending care without proper transfer to an equal or higher level of care."},
+{c:"3",q:"While a combative patient is restrained, what matters most?",o:["Continuously monitoring airway, breathing, and circulation","Restraining them face-down to prevent spitting","Using as few people as possible","Removing restraints once they’re on the stretcher"],e:"Restrain only with legal authority and per protocol, use enough help, avoid positions that compromise breathing (like prone), keep checking ABCs and distal circulation, and document."},
+
+{c:"4",q:"Which is usually NOT part of a radio report to the hospital?",o:["The patient’s insurance information","Chief complaint","Vital signs and care provided","Estimated time of arrival"],e:"Radio reports cover unit ID, age/sex, chief complaint, key findings and vitals, care given, response, and ETA."},
+{c:"4",q:"Why is the PCR considered a legal document?",o:["It’s a record made at the time of the assessment, decisions, care, and transfer of care","It must be signed by the medical director","It’s only used for billing","It replaces the hospital’s chart"],e:"The PCR can be used in court. Write it as if it will be read there: accurate, complete, and objective."},
+{c:"4",q:"Which statement is written objectively?",o:["Patient pacing, speaking loudly, and refusing to sit","Patient was acting crazy","Patient was drunk","Patient was rude and difficult"],e:"Document what you see and hear, not judgments or labels."},
+{c:"4",q:"You find an error on a paper PCR. You should:",o:["Draw a single line through it, initial and date it, and write the correct information","Scribble it out completely","Use correction fluid","Rip out the page and start over"],e:"The original entry must stay readable. Follow your agency’s process for electronic PCR corrections."},
+{c:"4",q:"On a refusal, which is most important to document?",o:["The patient had decision-making capacity and was told the risks, including death","The patient’s insurance carrier","Your opinion of the patient’s attitude","Only the patient’s signature"],e:"Document the assessment, capacity, specific risks explained, advice to call back, medical control contact, and signatures/witnesses per policy."},
+
+{c:"5",q:"The wrist is ___ to the elbow.",o:["Distal","Proximal","Medial","Superior"],e:"Distal = farther from the trunk or point of attachment. Proximal = closer."},
+{c:"5",q:"The ears are ___ to the nose.",o:["Lateral","Medial","Inferior","Distal"],e:"Lateral = away from the midline. Medial = toward the midline."},
+{c:"5",q:"The head is ___ to the chest.",o:["Superior","Inferior","Distal","Lateral"],e:"Superior = toward the head. Inferior = toward the feet."},
+{c:"5",q:"“Tachypnea” means:",o:["Rapid breathing","Slow breathing","Low blood pressure","Fast heart rate"],e:"Tachy- = fast, -pnea = breathing. Tachycardia is a fast heart rate."},
+{c:"5",q:"“Hypotension” and “bradycardia” together mean:",o:["Low blood pressure and slow heart rate","High blood pressure and slow heart rate","Low blood pressure and fast heart rate","High blood pressure and fast heart rate"],e:"Hypo- = low or below normal. Brady- = slow."},
+{c:"5",q:"“Bilateral lower-extremity edema” means:",o:["Swelling in both legs","Bruising on one leg","Swelling in both arms","Numbness in both feet"],e:"Bilateral = both sides, lower extremity = leg, edema = swelling."},
+
+{c:"6",q:"Blood leaving the right ventricle goes next to the:",o:["Pulmonary arteries, then the lungs","Aorta, then the body","Left atrium","Pulmonary veins"],e:"Right atrium → right ventricle → pulmonary arteries → lungs → pulmonary veins → left atrium → left ventricle → aorta."},
+{c:"6",q:"Which vessels carry oxygen-rich blood from the lungs to the left atrium?",o:["Pulmonary veins","Pulmonary arteries","Venae cavae","Coronary arteries"],e:"Pulmonary veins are the exception: veins carrying oxygen-rich blood. Pulmonary arteries carry oxygen-poor blood to the lungs."},
+{c:"6",q:"Which chamber pumps blood out to the body?",o:["Left ventricle","Right ventricle","Left atrium","Right atrium"],e:"The left ventricle is the thickest, strongest chamber and pushes blood into the aorta."},
+{c:"6",q:"The exchange of oxygen and carbon dioxide between the alveoli and capillaries is called:",o:["Respiration","Ventilation","Perfusion","Circulation"],e:"Ventilation moves air in and out. Respiration exchanges gases. Perfusion delivers blood to tissues."},
+{c:"6",q:"Perfusion is best defined as:",o:["Circulation of blood that delivers oxygen and nutrients to tissues","Moving air in and out of the lungs","The exchange of gases in the alveoli","The heart’s electrical activity"],e:"Inadequate perfusion is shock (hypoperfusion)."},
+{c:"6",q:"The sagittal plane divides the body into:",o:["Left and right","Front and back","Top and bottom","Inside and outside"],e:"Sagittal = left/right. Coronal (frontal) = front/back. Transverse = upper/lower."},
+{c:"6",q:"Which body system is most directly involved in a diabetic emergency?",o:["Endocrine","Digestive","Musculoskeletal","Respiratory"],e:"The endocrine system regulates hormones, including insulin."},
+
+{c:"7",q:"Using the lecture’s ranges, an infant is:",o:["1 month to 1 year","Birth to 1 month","1 to 3 years","Birth to 6 months"],e:"Neonate: birth to 1 month. Infant: 1 month to 1 year."},
+{c:"7",q:"Why are infants especially prone to airway obstruction?",o:["Relatively large tongue and occiput with a smaller, narrower airway","Their lungs are fully developed","They breathe mainly through the mouth","Their trachea is rigid and wide"],e:"Small airways block easily from swelling, secretions, or poor positioning. Infants are also largely nose breathers, so a blocked nose matters."},
+{c:"7",q:"When positioning an infant’s airway, a folded towel under the shoulders helps because:",o:["The large occiput tends to flex the neck forward","It raises the head for suctioning","It prevents vomiting","It keeps the infant warm"],e:"Padding the shoulders offsets the large back of the head and keeps the airway neutral."},
+{c:"7",q:"Which is a good communication adjustment for a young child?",o:["Get to eye level, use simple words, and involve the caregiver","Separate the child from the caregiver right away","Use medical terms so they trust you","Do the most painful part of the exam first"],e:"Calm, simple, age-appropriate explanations with the caregiver involved reduce fear."},
+{c:"7",q:"Which is a key consideration when assessing older adults?",o:["They may have atypical presentations and take many medications","They always have high blood pressure","Pain is usually more severe and obvious","New confusion is normal and can be ignored"],e:"Expect multiple illnesses, polypharmacy, and atypical presentations (like MI without chest pain). Allow time for hearing or mobility needs. New confusion is never assumed normal."},
+
+{c:"8",q:"Which is a principle of safe lifting?",o:["Keep the load close, use your legs, and keep your back neutral","Twist at the waist to save time","Lift with your arms extended","Lift without talking to your partner"],e:"Plan the lift, keep the weight close, power from the legs, neutral back, and communicate."},
+{c:"8",q:"When is an emergency move appropriate?",o:["Immediate danger, like fire, or when you can’t reach or treat a life threat where the patient lies","Whenever the patient is uncomfortable","Any time a backboard isn’t available","Only after a full head-to-toe exam"],e:"Use an emergency move when danger or the need for lifesaving care outweighs the risk of moving the patient."},
+{c:"8",q:"Which is an example of an emergency move?",o:["Clothes drag","Direct ground lift","Extremity lift after a full assessment","Draw-sheet transfer at the hospital"],e:"Drags (clothes, blanket, shoulder/forearm) are emergency moves that pull along the body’s long axis."},
+{c:"8",q:"A stair chair is most appropriate for:",o:["An alert patient who can sit, being moved down stairs","An unresponsive patient","A patient with a suspected spinal injury","A patient in cardiac arrest"],e:"Stair chairs need a patient who can sit and protect their own airway. Use the stretcher for routine transport on accessible ground."},
+{c:"8",q:"Why should one team leader count and direct a lift?",o:["To coordinate movement, prevent drops, and reduce injuries","To decide the hospital destination","Because only the leader may touch the patient","So the patient can help lift themselves"],e:"Coordinated lifts protect both the patient and the crew."},
+
+{c:"10",q:"Which is NOT part of the scene size-up?",o:["Obtaining a SAMPLE history","Scene safety and PPE","Mechanism of injury or nature of illness","Number of patients and need for more resources"],e:"Size-up: PPE/scene safety, MOI/NOI, number of patients, resources, and spinal considerations as indicated. SAMPLE comes later."},
+{c:"10",q:"What is the purpose of the primary assessment?",o:["Find and immediately manage life threats","Get a complete medical history","Take a full set of vital signs","Choose which hospital to use"],e:"Primary assessment: general impression, LOC, airway, breathing, circulation (including major bleeding), and transport priority."},
+{c:"10",q:"A patient’s eyes are closed. When you speak loudly, they open their eyes and mumble. AVPU level?",o:["V","A","P","U"],e:"V = responds to verbal stimulus. Reassess AVPU with any change and during every reassessment."},
+{c:"10",q:"A patient only moans and pulls away when you pinch the trapezius. AVPU level?",o:["P","V","U","A"],e:"P = responds to painful stimulus. U = no response to anything."},
+{c:"10",q:"In SAMPLE, “L” stands for:",o:["Last oral intake","Level of consciousness","Location of pain","Lung sounds"],e:"Signs/symptoms, Allergies, Medications, Pertinent past history, Last oral intake, Events leading up."},
+{c:"10",q:"“What does the pain feel like?” assesses which part of OPQRST?",o:["Q: quality","P: provocation","R: region/radiation","S: severity"],e:"Onset, Provocation/palliation, Quality, Region/radiation, Severity, Time."},
+{c:"10",q:"How do SAMPLE and OPQRST differ?",o:["SAMPLE gathers the patient’s history; OPQRST describes a symptom such as pain","They’re the same tool with different names","OPQRST is for trauma only; SAMPLE is for medical only","SAMPLE is used only in the primary assessment"],e:"Use SAMPLE for the overall history and OPQRST to characterize the chief complaint."},
+{c:"10",q:"Which patient needs a rapid head-to-toe exam rather than a focused assessment?",o:["An unresponsive patient or one with a significant mechanism of injury","An alert patient with a cut finger","A stable patient with an ankle sprain","An alert patient with a mild headache"],e:"Rapid exams look for hidden life threats. Focused assessments target the complaint in stable patients."},
+{c:"10",q:"How often should you reassess an unstable patient?",o:["About every 5 minutes","About every 15 minutes","Only once en route","Only if the patient complains"],e:"Common standard: unstable every 5 minutes, stable every 15 minutes, and after every intervention. Go with what your course taught."},
+{c:"10",q:"Which finding should trigger an urgent transport decision?",o:["Altered mental status","Stable vitals with an isolated minor injury","A patient who is alert and talking normally","Mild pain rated 2/10"],e:"Unstable ABCs, poor perfusion, altered mental status, or a serious injury or illness all call for rapid transport."},
+
+{c:"11",q:"You suspect a spinal injury in an unresponsive patient. Which airway maneuver?",o:["Jaw-thrust","Head-tilt/chin-lift","Recovery position","Neck hyperextension"],e:"Jaw-thrust opens the airway without tilting the head. Use head-tilt/chin-lift when no spinal injury is suspected."},
+{c:"11",q:"An OPA is appropriate for:",o:["An unresponsive patient with no gag reflex","A conscious patient with a gag reflex","Any patient with a facial injury","A patient who is talking"],e:"Size from the corner of the mouth to the earlobe (or angle of the jaw). Remove it if the patient gags."},
+{c:"11",q:"Which finding is a reason to avoid an NPA?",o:["Suspected basilar skull or midface fracture (fluid from the nose, raccoon eyes)","An intact gag reflex","Clenched teeth","A semi-conscious patient"],e:"NPAs are tolerated with a gag reflex, but avoid them with suspected skull-base or midface injury per protocol. Size from the nostril to the earlobe."},
+{c:"11",q:"A nonrebreather mask is best for a patient who:",o:["Is breathing adequately but needs high-concentration oxygen","Is apneic","Is breathing 6 times a minute and shallow","Has no pulse"],e:"Cannula: low-flow O₂. NRB: high-concentration O₂ with adequate breathing. BVM: inadequate or absent breathing."},
+{c:"11",q:"A patient is breathing 6 times per minute with shallow chest rise. Best intervention?",o:["Assist ventilations with a BVM and oxygen","Nonrebreather at 15 L/min","Nasal cannula at 4 L/min","Recovery position and observe"],e:"Masks only work if the patient moves enough air. Inadequate rate or depth needs ventilation."},
+{c:"11",q:"Which suggests adequate breathing in an adult?",o:["Regular rate of 12–20 with good chest rise and no accessory muscle use","Rate of 8 with shallow chest rise","Rate of 34 with retractions","Gasping respirations"],e:"Inadequate breathing can be too fast or slow, shallow, irregular, labored, or exhausted."},
+{c:"11",q:"For an adult in respiratory arrest who has a pulse, ventilate at about:",o:["1 breath every 6 seconds","1 breath every 2 seconds","1 breath every 15 seconds","30 compressions, then 2 breaths"],e:"About 10 breaths/min, each over 1 second with visible chest rise. Recheck the pulse about every 2 minutes."},
+{c:"11",q:"What is the main purpose of suctioning?",o:["Clear blood, vomit, or secretions that block the airway","Deliver oxygen","Replace the need for ventilation","Test the gag reflex"],e:"Keep it brief (commonly no more than 15 seconds in adults) because you aren’t oxygenating while you suction."},
+{c:"11",q:"A nasal cannula is best described as:",o:["Low-flow supplemental oxygen for a patient breathing adequately","High-concentration oxygen for severe hypoxia","A way to ventilate an apneic patient","A device that requires an absent gag reflex"],e:"A cannula gives modest supplementation. It does nothing for a patient who isn’t breathing adequately."},
+
+{c:"12",q:"Pharmacodynamics is the study of:",o:["What a drug does to the body","What the body does to a drug","How drugs are manufactured","Drug prices and supply"],e:"Pharmacology is the study of drugs. Pharmacodynamics is the drug’s effect on the body."},
+{c:"12",q:"A drug that blocks a receptor and prevents a response is a(n):",o:["Antagonist","Agonist","Indication","Side effect"],e:"An agonist stimulates a receptor; an antagonist blocks it. Naloxone is a classic antagonist."},
+{c:"12",q:"The reason a medication should be given is its:",o:["Indication","Contraindication","Side effect","Route"],e:"Indication = reason to give. Contraindication = reason not to give. Side effect = unintended effect."},
+{c:"12",q:"Recent use of erectile dysfunction medication is a ___ for nitroglycerin.",o:["Contraindication","Indication","Side effect","Route"],e:"Combined with nitro, these drugs can cause severe hypotension. Use your protocol’s time window."},
+{c:"12",q:"Which is NOT one of the medication rights?",o:["Right hospital","Right patient","Right dose","Right route"],e:"Patient, medication, dose, route, time, documentation, plus checking indications, contraindications, expiration, and protocol."},
+{c:"12",q:"After assisting with a medication, you should:",o:["Reassess and document the drug, dose, route, time, and response","Let the hospital do the reassessment","Document only if there’s a bad reaction","Give a second dose right away to be sure"],e:"Reassessment catches both the intended effect and adverse effects."},
+{c:"12",q:"Which is a common side effect of nitroglycerin?",o:["Headache and low blood pressure","Slow heart rate and high blood pressure","High blood sugar","Wheezing"],e:"Nitro dilates blood vessels, so check BP before and after each dose."},
+
+{c:"13",q:"Shock is best defined as:",o:["Inadequate perfusion of cells and tissues","Any systolic BP below 120","An emotional reaction to injury","Loss of consciousness"],e:"Shock = hypoperfusion. Tissues aren’t getting enough oxygen-rich blood."},
+{c:"13",q:"Which is a LATE sign of shock?",o:["Falling blood pressure","Anxiety or restlessness","Rapid pulse","Pale, cool skin"],e:"In compensated shock the body holds BP up. Hypotension usually means compensation is failing (decompensated)."},
+{c:"13",q:"What distinguishes compensated from decompensated shock?",o:["In compensated shock BP is maintained; in decompensated shock it falls","Compensated shock has no signs at all","Decompensated shock always has a slow pulse","Only decompensated shock needs treatment"],e:"Both need prompt care. Compensated shock is your window to act before the patient crashes."},
+{c:"13",q:"Which group best fits early signs of shock?",o:["Tachycardia, anxiety, pale/cool/clammy skin, rapid breathing","Bradycardia, flushed skin, calm demeanor","High BP, warm dry skin, slow breathing","Fixed pupils, no pulse"],e:"Delayed capillary refill can also help, especially in children."},
+{c:"13",q:"A tension pneumothorax causes which type of shock?",o:["Obstructive","Distributive","Cardiogenic","Hypovolemic"],e:"Obstructive = mechanical block to blood flow (tension pneumothorax, cardiac tamponade, pulmonary embolism)."},
+{c:"13",q:"Anaphylaxis and sepsis cause which type of shock?",o:["Distributive","Obstructive","Cardiogenic","Hypovolemic"],e:"Distributive = abnormal vessel dilation, so blood pools away from vital organs. Neurogenic shock is also distributive."},
+{c:"13",q:"A large heart attack that weakens the heart’s pumping causes:",o:["Cardiogenic shock","Hypovolemic shock","Obstructive shock","Distributive shock"],e:"Cardiogenic = pump failure."},
+{c:"13",q:"Severe bleeding or dehydration causes:",o:["Hypovolemic shock","Cardiogenic shock","Distributive shock","Obstructive shock"],e:"Hypovolemic = loss of circulating volume (blood, plasma, or fluid)."},
+{c:"13",q:"Which is a key EMT priority for suspected shock?",o:["Control bleeding, support airway/breathing, keep the patient warm, transport promptly","Give the patient water to replace fluids","Finish a detailed exam before moving","Let the patient walk to the ambulance to test stability"],e:"Treat life threats, prevent heat loss, transport quickly, and reassess often. Nothing by mouth."},
+
+{c:"14",q:"An adult is unresponsive with only occasional gasps and no definite pulse after 10 seconds. You should:",o:["Start CPR immediately","Give oxygen by nonrebreather","Check the pulse again for 30 seconds","Place in the recovery position"],e:"Gasping (agonal breathing) is not normal breathing. Unresponsive + not breathing normally + no definite pulse = start compressions."},
+{c:"14",q:"Adult chest compression rate:",o:["100–120 per minute","60–80 per minute","80–100 per minute","120–150 per minute"],e:"Push hard, push fast, allow full recoil, minimize pauses."},
+{c:"14",q:"Adult compression depth:",o:["At least 2 inches (5 cm), but not more than 2.4 inches (6 cm)","About 1 inch","At least 3 inches","Half the depth of the chest"],e:"For infants and children it’s about one-third the chest depth (about 1.5 in for infants, 2 in for children)."},
+{c:"14",q:"Why allow full chest recoil between compressions?",o:["It lets the heart refill with blood","It gives the rescuer a rest","It prevents all rib fractures","It moves air into the lungs"],e:"Leaning on the chest reduces refilling and the blood flow from the next compression."},
+{c:"14",q:"Adult compression-to-ventilation ratio before an advanced airway:",o:["30:2 for one or two rescuers","15:2 for one or two rescuers","30:2 for one rescuer, 15:2 for two","5:1"],e:"15:2 is for two-rescuer infant and child CPR."},
+{c:"14",q:"Which is the correct AED sequence?",o:["Turn on, attach pads, clear for analysis, shock if advised while clear, resume CPR right away","Attach pads, check a pulse for 1 minute, then turn on","Turn on, shock, then attach pads","Analyze while compressions continue"],e:"No one touches the patient during analysis or shock. After a shock, go straight back to compressions."},
+{c:"14",q:"Right after the AED delivers a shock, you should:",o:["Resume chest compressions immediately","Check a pulse for 10 seconds","Re-analyze right away","Give 2 breaths and wait"],e:"Do 2 minutes of CPR, then let the AED re-analyze."},
+{c:"14",q:"An adult has a strong pulse but isn’t breathing. You should:",o:["Give rescue breaths about 1 every 6 seconds and recheck the pulse about every 2 minutes","Start chest compressions","Attach the AED and shock","Give oxygen by nonrebreather only"],e:"No compressions while a pulse is present. Ventilate and keep reassessing."},
+{c:"14",q:"How often should compressors switch?",o:["About every 2 minutes (5 cycles of 30:2)","Every 30 seconds","Every 10 minutes","Only when the compressor feels exhausted"],e:"Compression quality drops before rescuers notice fatigue. Switch fast, ideally in under 5 seconds."},
+{c:"14",q:"Pauses in compressions should be kept under about:",o:["10 seconds","30 seconds","1 minute","2 minutes"],e:"Every pause drops blood flow to the brain and heart."},
+
+{c:"15",q:"What mainly separates a medical complaint from a traumatic injury during assessment?",o:["Nature of illness vs mechanism of injury guides your history and exam","Medical patients don’t need a primary assessment","Trauma patients don’t need a history","Only trauma patients can have life threats"],e:"Life threats come first either way. After that, the approach differs."},
+{c:"15",q:"For a responsive medical patient, which part of the assessment usually tells you the most?",o:["The history","The rapid head-to-toe exam","Pupil assessment","Capillary refill"],e:"In responsive medical patients, SAMPLE and OPQRST often point to the problem. Unresponsive medical patients get a rapid exam first."},
+{c:"15",q:"Why should EMTs avoid anchoring on a single diagnosis?",o:["Many conditions share symptoms, so you could miss the real problem","EMTs aren’t allowed to consider causes","Hospitals ignore EMS impressions","It wastes time on documentation"],e:"Treat life threats, keep alternatives open, and reassess as new information comes in."},
+{c:"15",q:"A patient’s medications include an albuterol inhaler and insulin. This suggests:",o:["A respiratory condition and diabetes","Heart failure and seizures","Allergies only","Nothing useful"],e:"The M and P in SAMPLE often reveal conditions the patient forgets to mention."},
+{c:"15",q:"Which is a category of medical emergency from the chapter?",o:["Neurologic","Orthopedic trauma","Penetrating injury","Burns"],e:"Categories include respiratory, cardiovascular, neurologic, GI, urologic, endocrine, hematologic, and more."},
+
+{c:"16",q:"Which finding suggests respiratory failure rather than distress?",o:["Drowsiness with slowing, shallow breathing after working hard","Anxiety and sitting upright","Fast breathing while speaking full sentences","Mild wheezing with normal mental status"],e:"Distress: working harder but compensating. Failure: exhaustion, altered mental status, poor oxygenation or ventilation."},
+{c:"16",q:"A high-pitched sound on inspiration in a child with a swollen throat is:",o:["Stridor","Wheezing","Crackles","Rhonchi"],e:"Stridor = upper airway obstruction. Treat it as an emergency."},
+{c:"16",q:"Wheezing usually indicates:",o:["Narrowed lower airways","Fluid in the alveoli","Upper airway obstruction","A collapsed lung"],e:"Classic in asthma and COPD exacerbations, often with prolonged exhalation."},
+{c:"16",q:"Crackles (rales) usually indicate:",o:["Fluid in, or air popping open, the small airways, as in pulmonary edema","Narrowed bronchioles","An object in the trachea","Normal lungs"],e:"Pulmonary edema often shows crackles, dyspnea, and sometimes frothy sputum."},
+{c:"16",q:"Which patient needs BVM assistance rather than oxygen alone?",o:["Becoming sleepy, respiratory rate 8, poor chest rise","Alert, rate 24, speaking full sentences","Anxious, rate 22, SpO₂ 93%","Alert with mild wheezing"],e:"BVM is for apnea, poor tidal volume, exhaustion, or altered mental status with ineffective breathing."},
+{c:"16",q:"Wheezing with prolonged exhalation in a patient with a known lung history most suggests:",o:["Asthma or COPD exacerbation","Pulmonary edema","Upper airway obstruction","Normal breathing"],e:"There’s overlap, so weigh the whole picture: history, medications, lung sounds, other signs."},
+{c:"16",q:"Pink, frothy sputum with crackles most suggests:",o:["Pulmonary edema","Asthma","Croup","Hyperventilation"],e:"Often with severe dyspnea, orthopnea, and leg edema."},
+{c:"16",q:"After any respiratory treatment, what should you reassess?",o:["Mental status, rate/effort, chest rise, lung sounds, SpO₂, and perfusion","Only SpO₂","Only blood pressure","Nothing until arrival"],e:"Mental status and work of breathing tell you whether the patient is improving or tiring."},
+{c:"16",q:"A conscious adult in respiratory distress should usually be positioned:",o:["In a position of comfort, often sitting upright","Flat on their back","Prone","Head down with legs raised"],e:"Sitting up eases the work of breathing. Many patients choose a tripod position."},
+
+{c:"17",q:"Which order is correct for blood flow?",o:["Right atrium → right ventricle → lungs → left atrium → left ventricle → body","Left atrium → left ventricle → lungs → right atrium → right ventricle → body","Right ventricle → right atrium → lungs → left ventricle → left atrium → body","Right atrium → left atrium → lungs → right ventricle → left ventricle → body"],e:"The right side pumps to the lungs; the left side pumps to the body."},
+{c:"17",q:"Which is a typical ACS presentation?",o:["Chest pressure spreading to the arm or jaw with sweating and nausea","Sharp pain only when pressing on one rib","Pain that eases with deep breaths","Itchy rash and hives"],e:"Also shortness of breath. Often described as pressure, squeezing, or heaviness."},
+{c:"17",q:"Atypical ACS (little or no chest pain) is more common in:",o:["Older adults, women, and people with diabetes","Young male athletes only","Children","No one; chest pain is always present"],e:"They may present with weakness, dyspnea, nausea, or fatigue."},
+{c:"17",q:"How does angina differ from a myocardial infarction?",o:["Angina is ischemia without heart muscle death; MI involves muscle death from prolonged ischemia","Angina is always more painful","An MI is always relieved by rest","Angina only happens at night"],e:"You can’t reliably tell them apart in the field, so treat chest pain as possible ACS."},
+{c:"17",q:"A chest pain patient has SpO₂ 97% and no shortness of breath. Oxygen?",o:["Not routinely; give it if indicated (low SpO₂, dyspnea) per protocol","Always 15 L/min by nonrebreather","Always 2 L/min by cannula","Start BVM ventilations"],e:"Current guidance avoids routine oxygen in ACS when saturation is normal. Many protocols use a threshold around 94%."},
+{c:"17",q:"Which is a contraindication to aspirin for suspected ACS?",o:["Known aspirin allergy","Chest pain lasting over 10 minutes","Age over 50","Nausea"],e:"Also active GI bleeding and other protocol-specific contraindications. Dose per your protocol (usually chewed)."},
+{c:"17",q:"A chest pain patient asks for help with their prescribed nitroglycerin. Systolic BP is 88. You should:",o:["Not assist with nitro, and follow protocol","Give it, since it’s their own prescription","Give half a tablet","Give it and recheck BP in 30 minutes"],e:"Low BP is a contraindication (thresholds vary, often below 100 or 90 systolic). Also check for recent erectile dysfunction drug use."},
+{c:"17",q:"Which signs suggest acute heart failure/pulmonary edema?",o:["Dyspnea, crackles, orthopnea, leg edema, low SpO₂","Wheezing only, with an asthma history","High fever and rash","Warm, dry skin and slow breathing"],e:"Pink, frothy sputum may appear in severe cases."},
+{c:"17",q:"Which is an initial EMT priority for suspected ACS?",o:["ABCs, rest and position of comfort, aspirin and nitro per protocol, rapid transport","Walk the patient to the ambulance","Delay transport until the pain resolves","Give oxygen to everyone regardless of SpO₂"],e:"Keep the AED close in case of cardiac arrest."},
+
+{c:"S",s:"A",q:"Which finding most suggests he’s heading toward respiratory failure?",o:["Increasing fatigue","Diffuse wheezes","Sitting upright","Pulse of 118"],e:"Tiring out means compensation is failing. Watch for falling mental status, slowing rate, and poor chest rise."},
+{c:"S",s:"A",q:"Which assessment priorities come first?",o:["Mental status and airway, breathing effort and chest rise, pulse and perfusion","Blood glucose, pupils, and a full SAMPLE","Pain scale, skin turgor, and capillary refill","Medication list, allergies, and last oral intake"],e:"ABCs and mental status first. History comes after life threats are managed."},
+{c:"S",s:"A",q:"He’s still alert and you can see chest rise. Best plan?",o:["High-concentration oxygen, ready to assist with a BVM if ventilation becomes inadequate","BVM ventilations no matter what","Nasal cannula at 2 L/min only","Withhold oxygen until arrival"],e:"Oxygen helps only if breathing moves enough air. The trigger for BVM is inadequate ventilation."},
+{c:"S",s:"A",q:"Ten minutes later he’s drowsy, RR 36 and very shallow, SpO₂ 82%. Next step?",o:["Assist ventilations with a BVM and oxygen","Turn up the nonrebreather flow","Switch to nasal cannula","Lay him flat to rest"],e:"Altered mental status plus shallow breathing means oxygen alone won’t fix it. He needs ventilation."},
+{c:"S",s:"A",q:"Which findings best track his response to treatment?",o:["LOC, rate and depth, chest rise, SpO₂, lung sounds, pulse","Pupils and blood glucose","Pain score only","Skin color only"],e:"Reassess these after every intervention and at least every 5 minutes in an unstable patient."},
+{c:"S",s:"B",q:"Which type of shock is most likely?",o:["Hypovolemic (hemorrhagic)","Cardiogenic","Distributive","Obstructive"],e:"Visible blood loss plus a fast pulse, pale cool skin, and anxiety point to hemorrhage."},
+{c:"S",s:"B",q:"What’s the first priority?",o:["Control the major bleeding","Splint the thigh","Take a full SAMPLE history","Check his pupils"],e:"Life-threatening bleeding is controlled in the primary assessment (direct pressure, tourniquet per protocol)."},
+{c:"S",s:"B",q:"Which is appropriate care for him?",o:["Keep him warm and transport rapidly","Give sips of water","Delay transport for a detailed exam","Have him walk to the stretcher"],e:"Also support breathing and oxygen as indicated, and reassess often."},
+{c:"S",s:"B",q:"Which change shows his perfusion is getting worse?",o:["BP drops to 78/50, he becomes confused, and his radial pulse weakens","Pulse slows to 96 and his skin warms","He’s calmer and talking clearly","His bleeding stops"],e:"Falling BP, worsening mental status, and weak pulses suggest decompensation."},
+{c:"S",s:"C",q:"What’s the most likely concern?",o:["Acute coronary syndrome","Asthma attack","Hypoglycemia","Anxiety only"],e:"Pressure, nausea, and sweating together are classic for ACS."},
+{c:"S",s:"C",q:"Before assisting with nitroglycerin, which question matters most?",o:["Have you taken erectile dysfunction medication recently?","When did you last eat?","Do you smoke?","Have you ever had surgery?"],e:"Also confirm it’s his own prescription, check BP, and ask about allergies and doses already taken."},
+{c:"S",s:"C",q:"Should he get oxygen?",o:["Not routinely: SpO₂ is 96% and he isn’t hypoxic","Yes, 15 L/min by NRB for all chest pain","Yes, by BVM","Only after nitro"],e:"Give oxygen if he becomes hypoxic or short of breath, per protocol."},
+{c:"S",s:"C",q:"Which plan fits best?",o:["ABCs, position of comfort, aspirin and nitro per protocol, prompt transport, reassess, AED ready","Have him drive himself to his doctor","Wait on scene to see if the pain resolves","Give oxygen and release him if the pain improves"],e:"Use OPQRST and SAMPLE, and get him to a facility that can treat ACS."}
+];
+
+const CARDS=[
+{c:"1",q:"What does the EMS medical director do?",a:"Physician who authorizes EMT field care and oversees it through protocols, standing orders, and quality review."},
+{c:"1",q:"Online medical direction vs standing orders?",a:"Online: real-time radio or phone contact with medical control. Standing orders: pre-authorized instructions written into protocols."},
+{c:"1",q:"What can a dispatcher provide before EMS arrives?",a:"Sends the right resources and gives pre-arrival instructions, such as CPR coaching."},
+{c:"1",q:"Name two EMS system quality goals.",a:"Any two: evidence-based care, accessible care, preventive care, complete patient records."},
+{c:"2",q:"Name four hazards to consider before patient contact.",a:"Any four: traffic, violence, infectious exposure, hazardous materials, unstable structures, fire, electrical hazards."},
+{c:"2",q:"Describe standard precautions and give three PPE examples.",a:"Treat all body fluids as potentially infectious. PPE: gloves, eye protection, mask, gown as the exposure requires."},
+{c:"2",q:"Two signs of occupational stress and two healthy strategies.",a:"Signs: sleep problems, irritability (also withdrawal, poor concentration). Strategies: rest, peer support, less overtime, professional help."},
+{c:"2",q:"Why reassess scene safety throughout a call?",a:"Conditions change, and crew safety is required to keep caring for the patient."},
+{c:"3",q:"Expressed vs implied consent.",a:"Expressed: the patient knowingly agrees. Implied: assumed in an emergency when the patient can’t consent."},
+{c:"3",q:"A competent patient refuses care. What do you do?",a:"Assess capacity, explain the risks (including death), encourage care, contact medical control per policy, document the refusal with signatures/witnesses."},
+{c:"3",q:"Define negligence and list its four elements.",a:"Failure to provide the expected standard of care. Elements: duty, breach of duty, damages, causation."},
+{c:"3",q:"What to consider before restraining a combative patient?",a:"Legal authority (often law enforcement), protocol or medical direction, enough help, protecting airway and circulation, continuous monitoring, documentation."},
+{c:"4",q:"Four essential parts of a radio report.",a:"Unit and patient ID (age/sex), chief complaint, key findings and vitals, care given and response, ETA."},
+{c:"4",q:"Why is the PCR a legal document?",a:"It’s a record made at the time of the assessment, decisions, care, and transfer of care, and it can be used in court."},
+{c:"4",q:"Rewrite objectively: “Patient was acting crazy.”",a:"Example: “Patient pacing, speaking loudly, and refusing to sit; alert and answering questions.”"},
+{c:"4",q:"What should be documented after a transport refusal?",a:"Assessment findings, capacity, risks explained, the patient’s own statements, advice given (call back anytime), medical control contact, signatures/witnesses."},
+{c:"5",q:"Define superior, inferior, medial, and lateral.",a:"Toward the head; toward the feet; toward the midline; away from the midline."},
+{c:"5",q:"Define proximal and distal using an arm example.",a:"Proximal is closer to the trunk; distal is farther. The wrist is distal to the elbow."},
+{c:"5",q:"What do tachy-, brady-, hypo-, and hyper- mean?",a:"Fast; slow; low/below normal; high/above normal."},
+{c:"5",q:"“Bilateral lower-extremity edema” in plain language.",a:"Swelling in both legs."},
+{c:"6",q:"Respiratory system: main function and EMS relevance.",a:"Gas exchange. Breathing and oxygenation problems."},
+{c:"6",q:"Cardiovascular system: main function and EMS relevance.",a:"Circulates blood. Perfusion and shock."},
+{c:"6",q:"Nervous system: main function and EMS relevance.",a:"Controls sensation and responses. Level of consciousness and the neuro exam."},
+{c:"6",q:"Musculoskeletal system: main function and EMS relevance.",a:"Support and movement. Injuries and safe lifting and moving."},
+{c:"6",q:"Digestive system: main function and EMS relevance.",a:"Processes nutrients. Abdominal complaints."},
+{c:"6",q:"Endocrine system: main function and EMS relevance.",a:"Hormone regulation. Diabetic emergencies."},
+{c:"6",q:"Trace blood from the right atrium through the lungs to the left ventricle.",a:"Right atrium → right ventricle → pulmonary arteries → lungs → pulmonary veins → left atrium → left ventricle."},
+{c:"6",q:"Ventilation vs respiration vs perfusion.",a:"Ventilation moves air; respiration exchanges gases; perfusion delivers blood to tissues."},
+{c:"6",q:"Sagittal, coronal, and transverse planes.",a:"Sagittal: left/right. Coronal: front/back. Transverse: upper/lower."},
+{c:"7",q:"Neonate and infant age ranges from the lecture.",a:"Neonate: birth to 1 month. Infant: 1 month to 1 year."},
+{c:"7",q:"Why are infants especially vulnerable to airway compromise?",a:"Relatively large tongue and occiput, small narrow airway. Swelling or poor positioning obstructs breathing easily."},
+{c:"7",q:"Two communication adjustments for pediatric patients.",a:"Age-appropriate language, involve the caregiver, calm and simple explanations (get to eye level)."},
+{c:"7",q:"Two considerations when assessing older adults.",a:"Multiple illnesses and medications, atypical presentations; allow time for hearing and mobility needs."},
+{c:"8",q:"Three principles of safe lifting.",a:"Plan the move, keep the load close, use your legs with a neutral back, communicate as a team."},
+{c:"8",q:"When is an emergency move appropriate?",a:"When immediate danger or the need for urgent lifesaving care outweighs the risk of moving the patient."},
+{c:"8",q:"Stair chair vs wheeled stretcher.",a:"Stair chair: selected alert, seated patients on stairs. Stretcher: routine transport on accessible ground."},
+{c:"8",q:"Why should a team leader count and direct a lift?",a:"Coordinates movement, prevents falls and drops, reduces injury."},
+{c:"10",q:"Major steps of the scene size-up.",a:"PPE/scene safety, mechanism of injury or nature of illness, number of patients, additional resources, spinal considerations as indicated."},
+{c:"10",q:"Purpose of the primary assessment.",a:"Identify and begin managing immediate life threats: LOC, airway, breathing, circulation."},
+{c:"10",q:"Explain AVPU and when to reassess it.",a:"Alert, responds to Verbal, responds to Pain, Unresponsive. Recheck with any change and during every reassessment."},
+{c:"10",q:"Contrast SAMPLE with OPQRST.",a:"SAMPLE gathers the history; OPQRST characterizes a symptom like pain."},
+{c:"10",q:"Rapid head-to-toe vs focused assessment.",a:"Rapid exam hunts for urgent problems (unresponsive or significant MOI). Focused exam targets the complaint in stable patients."},
+{c:"10",q:"What should trigger an urgent transport decision?",a:"Unstable ABCs, poor perfusion, altered mental status, serious injury, or another life threat."},
+{c:"11",q:"Adequate vs inadequate breathing.",a:"Adequate: normal rate and depth with effective chest rise. Inadequate: shallow, irregular, too fast or slow, exhausted, or poorly ventilating."},
+{c:"11",q:"When to use head-tilt/chin-lift vs jaw-thrust?",a:"Head-tilt/chin-lift when no spine injury is suspected; jaw-thrust when it is."},
+{c:"11",q:"OPA vs NPA: selection and major contraindications.",a:"OPA: unresponsive with no gag reflex. NPA: OK with an intact gag; avoid with suspected basilar skull or midface injury per protocol."},
+{c:"11",q:"Nasal cannula vs nonrebreather vs BVM.",a:"Cannula: low-flow supplemental O₂. NRB: high-concentration O₂ for adequate breathing. BVM: ventilation for inadequate or absent breathing."},
+{c:"11",q:"Purpose of suctioning.",a:"Clear blood, vomit, or secretions blocking the airway; keep it brief to avoid long interruptions in oxygenation."},
+{c:"12",q:"Define pharmacology, pharmacodynamics, agonist, antagonist.",a:"Study of drugs; a drug’s effects on the body; stimulates a receptor; blocks a receptor."},
+{c:"12",q:"Medication rights/checks before assisting or giving a drug.",a:"Right patient, medication, dose, route, time, documentation, plus indication, contraindications, expiration, and protocol."},
+{c:"12",q:"Indication vs contraindication vs side effect.",a:"Reason to give; reason not to give; unintended effect."},
+{c:"12",q:"Why reassess and document after a medication?",a:"To catch the therapeutic response or adverse effects, and to record drug, dose, route, time, and response."},
+{c:"13",q:"Define shock.",a:"Inadequate perfusion of cells and tissues (hypoperfusion)."},
+{c:"13",q:"Compensated vs decompensated shock.",a:"Compensated: BP maintained despite signs of poor perfusion. Decompensated: compensation fails, often with hypotension."},
+{c:"13",q:"Four possible early signs of shock.",a:"Tachycardia, anxiety or restlessness, pale/cool/clammy skin, rapid breathing (delayed capillary refill where useful)."},
+{c:"13",q:"Hypovolemic, cardiogenic, distributive, obstructive shock.",a:"Volume loss; pump failure; abnormal vessel dilation; mechanical block to circulation."},
+{c:"13",q:"Key EMT care priorities for suspected shock.",a:"Treat life threats and bleeding, support airway/breathing/oxygen as indicated, prevent heat loss, transport promptly, reassess."},
+{c:"14",q:"When do you start CPR on an adult?",a:"Unresponsive, not breathing normally (or only gasping), and no definite pulse within 10 seconds."},
+{c:"14",q:"Adult compression rate, depth, and recoil.",a:"100–120/min, at least 2 in (5 cm) but not over 2.4 in (6 cm), full recoil, minimal pauses."},
+{c:"14",q:"Adult compression-to-ventilation ratio before an advanced airway.",a:"30:2 for one or two rescuers."},
+{c:"14",q:"Outline safe AED use.",a:"Power on, attach pads, clear for analysis and shock, follow prompts, resume CPR right away."},
+{c:"14",q:"How does care differ for respiratory arrest with a pulse?",a:"Ventilate (about 1 breath every 6 seconds in adults) and recheck the pulse; no compressions while a pulse is present."},
+{c:"15",q:"Medical complaint vs traumatic injury in initial assessment.",a:"Nature of illness vs mechanism of injury guides the history and exam; life threats come first in both."},
+{c:"15",q:"Four categories of medical emergencies.",a:"Any four: respiratory, cardiovascular, neurologic, GI, urologic, endocrine, hematologic, and others."},
+{c:"15",q:"Why avoid anchoring on a single diagnosis?",a:"Many causes share symptoms. Treat life threats, consider alternatives, and reassess."},
+{c:"15",q:"How does SAMPLE help identify a medical emergency?",a:"It reveals symptoms, allergies, medications, past history, last intake, and the events before the illness."},
+{c:"16",q:"Respiratory distress vs respiratory failure.",a:"Distress: more work but compensating. Failure: inadequate oxygenation or ventilation, exhaustion, or altered mental status."},
+{c:"16",q:"Wheezing vs crackles vs stridor.",a:"Wheezing: narrowed lower airways. Crackles: fluid or small airways popping open. Stridor: upper airway obstruction."},
+{c:"16",q:"Findings that make BVM more appropriate than oxygen alone.",a:"Apnea, poor tidal volume, exhaustion, severe altered mental status with ineffective breathing."},
+{c:"16",q:"Asthma/COPD exacerbation vs pulmonary edema.",a:"Asthma/COPD: wheezing, prolonged exhalation. Pulmonary edema: crackles, dyspnea, possible frothy sputum. They can overlap."},
+{c:"16",q:"What to reassess after respiratory treatment.",a:"Mental status, rate and effort, chest rise, lung sounds, SpO₂, overall perfusion."},
+{c:"17",q:"Trace blood flow through the heart’s chambers and lungs.",a:"Right atrium → right ventricle → lungs → left atrium → left ventricle → body."},
+{c:"17",q:"Typical and possible atypical signs of ACS.",a:"Typical: chest pressure, radiation, sweating, nausea, dyspnea. Atypical: little or no chest pain (weakness, fatigue, shortness of breath)."},
+{c:"17",q:"Angina vs myocardial infarction.",a:"Angina: ischemic discomfort without heart muscle death. MI: muscle injury or death from prolonged ischemia."},
+{c:"17",q:"Initial EMT priorities for suspected ACS.",a:"ABCs, rest and positioning, oxygen only when indicated, aspirin and help with prescribed nitro per protocol and contraindications, rapid transport."},
+{c:"17",q:"Symptoms of acute heart failure/pulmonary edema.",a:"Dyspnea, crackles, orthopnea, edema, low oxygen saturation, sometimes pink frothy sputum."},
+{c:"S",q:"Scenario A: 67-year-old, two-word phrases, RR 32 shallow, pulse 118, SpO₂ 86%, wheezes, tiring. Priorities, oxygen vs BVM, and reassessment?",a:"Priorities: mental status/ABCs, breathing effort and chest rise, pulse/perfusion. Give oxygen; move to BVM promptly if ventilation becomes inadequate. Reassess LOC, rate/depth, chest rise, SpO₂, lung sounds, pulse."},
+{c:"S",q:"Scenario B: 24-year-old after a fall, pale/cool/anxious, pulse 132, BP 94/60, RR 28, thigh bleeding. Shock type, interventions, signs of worsening?",a:"Hypovolemic (hemorrhagic) shock. Control the bleeding, ABCs, support breathing/oxygen as indicated, keep warm, rapid transport. Worsening: falling BP, declining LOC, weak pulses."},
+{c:"S",q:"Scenario C: 58-year-old, chest pressure 20 min, nausea, sweating, SpO₂ 96%. Concern, history questions, treatment and transport?",a:"Suspected ACS. OPQRST/SAMPLE, medications and contraindications (ED drugs, allergies). ABCs, aspirin per protocol, assist with prescribed nitro if appropriate, prompt transport, reassess. No routine oxygen at 96%."}
+];
+
+Object.assign(STEMS,{
+D:"A 3-year-old woke up at night with a barking, seal-like cough and noisy breathing on inspiration. Low-grade fever, symptoms came on over a day. He’s sitting in his mother’s lap.",
+E:"A 60-year-old man collapses in a restaurant. You arrive within minutes; bystanders aren’t doing CPR. He’s unresponsive with occasional gasps.",
+F:"A 30-year-old was stung by a bee 10 minutes ago. She has hives, facial swelling, wheezing, BP 82/50, pulse 128. She carries a prescribed epinephrine auto-injector.",
+G:"A 30-year-old driver was in a low-speed crash. He’s walking around the scene, says he’s fine, and doesn’t want to go to the hospital.",
+H:"A 74-year-old woman is sitting bolt upright, short of breath. Crackles in both lungs, pink frothy sputum, swollen ankles. SpO₂ 88%, BP 168/96, pulse 112. She sleeps on three pillows.",
+I:"You’re sent to a home garage where a caller says two people are “passed out.” A car engine may have been running.",
+J:"A 9-month-old has had vomiting and diarrhea for 2 days. Few wet diapers, sunken fontanelle, sleepy, HR 180, capillary refill 4 seconds."
+});
+
+MCQ.push(...[
+{c:"1",q:"Which provider level adds IV therapy and some additional medications to EMT skills?",o:["Advanced EMT (AEMT)","Emergency Medical Responder (EMR)","EMT","Emergency medical dispatcher"],e:"Levels from basic to advanced: EMR, EMT, AEMT, paramedic. Paramedics provide the most advanced prehospital care."},
+{c:"1",q:"An EMT’s scope of practice is best described as:",o:["The care an EMT is legally allowed to provide, set by state law and the medical director","Any care the EMT feels comfortable giving","Whatever a patient requests","The same skills as a paramedic"],e:"Scope of practice is what you’re allowed to do. Standard of care is how well you’re expected to do it."},
+{c:"1",q:"The call center that receives 911 calls is called the:",o:["Public safety answering point (PSAP)","Medical control center","Trauma center","Base station hospital"],e:"Enhanced 911 also gives the dispatcher the caller’s location automatically."},
+{c:"1",q:"Continuous quality improvement (CQI) mainly involves:",o:["Reviewing calls and care to find and fix problems","Punishing EMTs for mistakes","Reducing how often protocols are updated","Billing patients accurately"],e:"CQI is an ongoing cycle of review, feedback, and improvement, often through PCR review."},
+{c:"1",q:"Which is part of off-line (indirect) medical control?",o:["Writing protocols and reviewing run reports","Talking to the physician by radio during a call","A doctor on scene directing care","Calling the hospital for a nitro order"],e:"Off-line control happens outside the call: protocols, training, and review. Online control is real-time contact."},
+{c:"1",q:"What is the main role of the National Registry of EMTs?",o:["Providing a national certification exam to verify competency","Issuing state licenses to practice","Writing local protocols","Hiring EMTs for agencies"],e:"Certification shows you met a standard. Licensure to practice comes from the state."},
+{c:"1",q:"Mobile integrated health care (community paramedicine) aims to:",o:["Provide care in the community to prevent unnecessary ED visits","Replace hospitals with ambulances","Transport every patient to a trauma center","Eliminate 911 dispatch"],e:"Examples include home visits for patients with chronic conditions or frequent 911 use."},
+{c:"1",q:"Protocols based on the best available research are an example of:",o:["Evidence-based medicine","Standing orders only","Online medical direction","Scope of practice"],e:"Evidence-based care is one of the system quality goals from this chapter."},
+
+{c:"2",q:"The single most effective way to prevent the spread of infection is:",o:["Hand washing","Wearing a mask on every call","Taking antibiotics","Avoiding sick patients"],e:"Wash with soap and water for about 20 seconds, or use alcohol-based sanitizer when hands aren’t visibly soiled."},
+{c:"2",q:"Tuberculosis is mainly spread by:",o:["Airborne droplets","Blood contact","Contaminated food","Insect bites"],e:"For suspected TB, wear an N95 or HEPA respirator."},
+{c:"2",q:"Hepatitis B, hepatitis C, and HIV are mainly spread by:",o:["Blood and body fluids","Airborne droplets","Casual skin contact","Contaminated water"],e:"These are bloodborne pathogens. The hepatitis B vaccine is recommended for EMS providers."},
+{c:"2",q:"You get a needlestick from a used needle. What should you do first?",o:["Wash the area with soap and water, then report it right away for medical evaluation","Finish the shift and mention it later","Squeeze and cover it with a bandage, nothing else","Wait to see if you get sick"],e:"Report exposures immediately to your designated officer so follow-up and post-exposure treatment can start fast."},
+{c:"2",q:"A dying patient says, “If I can just see my granddaughter’s wedding, I’ll do anything.” Which grief stage?",o:["Bargaining","Denial","Anger","Acceptance"],e:"Kübler-Ross stages: denial, anger, bargaining, depression, acceptance. People don’t always move through them in order."},
+{c:"2",q:"The first stage of grief is usually:",o:["Denial","Anger","Bargaining","Depression"],e:"Denial is often the first reaction: “This can’t be happening.”"},
+{c:"2",q:"Dispatch reports a shooting and the shooter may still be on scene. You should:",o:["Stage at a safe distance until law enforcement secures the scene","Go in quickly before the patient deteriorates","Enter if you wear a reflective vest","Have your partner go in alone"],e:"Never enter an unsafe scene. Staging nearby lets you move in as soon as it’s cleared."},
+{c:"2",q:"At a possible hazardous materials scene, you should first:",o:["Stay upwind and uphill at a safe distance and identify the material with binoculars and the ERG","Walk up to read the placard","Remove victims immediately without protection","Approach from downwind"],e:"Only properly trained and equipped teams enter the hot zone. EMTs treat patients after decontamination."},
+{c:"2",q:"A power line is down across a crashed car with the driver inside. You should:",o:["Stay back, tell the driver to stay inside, and get the power company and fire department","Move the line with a wooden stick","Pull the driver out quickly","Touch the car to check if it’s live"],e:"Treat every downed line as live until the power company says otherwise."},
+{c:"2",q:"Which call is most likely to be a critical incident for EMS crews?",o:["Death of a child","A stable patient with a sprained ankle","A routine hospital transfer","A canceled call"],e:"Other examples: line-of-duty injury or death, mass casualties, and incidents involving people you know."},
+{c:"2",q:"A patient has a fever and a cough with suspected respiratory infection. Which is appropriate?",o:["Put a surgical mask on the patient if they can tolerate it and wear your own respiratory protection","Avoid touching the patient","Give the patient an N95 with a valve","Skip PPE because they’re alert"],e:"If the patient needs oxygen, a nonrebreather can serve instead of a surgical mask."},
+
+{c:"3",q:"Standard of care is:",o:["The care a similarly trained EMT would provide in similar circumstances","Whatever the patient wants","Care defined only by hospital policy","The highest level of care possible"],e:"Failing to meet the standard of care is a breach of duty."},
+{c:"3",q:"An EMT’s duty to act usually begins when:",o:["They’re on duty and dispatched to a call","They first see the patient’s face","The patient signs a consent form","They arrive at the hospital"],e:"Duty to act can also come from agency policy or law, so know your local rules for off-duty situations."},
+{c:"3",q:"Good Samaritan laws generally protect someone who:",o:["Gives emergency care in good faith, within their training, without expecting payment","Acts with gross negligence","Gives care beyond their training","Gets paid for the care"],e:"They do not protect against gross negligence or acting outside your training."},
+{c:"3",q:"An emancipated minor:",o:["Can legally consent to their own care","Always needs a parent’s consent","Can never refuse care","Must be over 17"],e:"Examples may include minors who are married, in the military, or court-emancipated. Rules vary by state."},
+{c:"3",q:"Threatening to restrain a patient against their will, causing fear of harm, could be considered:",o:["Assault","Battery","Abandonment","Libel"],e:"Assault = putting someone in fear of bodily harm. Battery = touching someone without consent."},
+{c:"3",q:"Touching or treating a competent adult who has refused care could be considered:",o:["Battery","Assault","Slander","Abandonment"],e:"Respect a competent adult’s refusal, and document it thoroughly."},
+{c:"3",q:"Family says the patient has a DNR, but no one can find it. The patient is in cardiac arrest. You should generally:",o:["Begin resuscitation and follow protocol or medical control","Do nothing because the family says so","Wait until the family finds the paperwork","Leave the scene"],e:"Without a valid DNR in hand, start resuscitation unless your protocol says otherwise."},
+{c:"3",q:"Which is a definitive (obvious) sign of death?",o:["Decomposition of body tissue","Absent radial pulse","Cool skin","Unresponsiveness"],e:"Others: decapitation, dependent lividity, rigor mortis, and injuries clearly incompatible with life."},
+{c:"3",q:"Which is a HIPAA violation?",o:["Discussing a patient’s condition with a reporter","Giving a report to the receiving nurse","Documenting care on the PCR","Talking to medical control about the patient"],e:"You may share protected health information with others directly involved in the patient’s care."},
+{c:"3",q:"At a crime scene, which action is correct?",o:["Give needed care but avoid disturbing evidence, like not cutting through bullet holes","Clean up the scene before police arrive","Delay care until police finish","Move items to make room, then put them back"],e:"Patient care comes first, but note what you touched and tell law enforcement."},
+{c:"3",q:"A patient who may be an organ donor is in cardiac arrest. You should:",o:["Provide the same care as for any other patient","Stop CPR to preserve the organs","Call the organ bank before treating","Withhold care until the family decides"],e:"Organ donation status doesn’t change your care in the field."},
+{c:"3",q:"Which patient most likely lacks decision-making capacity to refuse care?",o:["A confused patient with slurred speech who repeats the same questions","An alert adult who understands the risks","A calm patient who disagrees with you","An adult who wants a different hospital"],e:"Capacity can be affected by alcohol, drugs, head injury, hypoxia, low blood sugar, and more."},
+{c:"3",q:"In most states, EMTs are required to report suspected:",o:["Child abuse","Minor traffic violations","Patients who decline transport","Patients without insurance"],e:"Elder abuse and certain crimes are also commonly mandated reports. Know your state’s rules."},
+{c:"3",q:"Making false statements about someone in writing that damage their reputation is:",o:["Libel","Slander","Assault","Negligence"],e:"Libel is written; slander is spoken. Keep PCRs factual and objective."},
+
+{c:"4",q:"Which is an open-ended question?",o:["“Can you describe your pain?”","“Does it hurt?”","“Are you allergic to anything?”","“Is the pain sharp?”"],e:"Open-ended questions get more detail. Closed questions are faster for specific facts or when the patient can only nod."},
+{c:"4",q:"Which should NOT be said over the radio?",o:["The patient’s name","The chief complaint","The patient’s age","Your ETA"],e:"Radio traffic can be overheard. Keep it brief, use plain language, and leave out identifying details."},
+{c:"4",q:"Good radio technique includes:",o:["Pressing the button and waiting about a second before speaking","Speaking before you press the button","Keeping the microphone far from your mouth","Using slang to save time"],e:"Keep transmissions short (under about 30 seconds) and speak clearly."},
+{c:"4",q:"A device that receives a weak signal and rebroadcasts it at higher power is a:",o:["Repeater","Base station","Portable radio","Duplex receiver"],e:"Repeaters extend range when portable or mobile radios can’t reach the base station."},
+{c:"4",q:"When medical control gives you an order, you should:",o:["Repeat it back word for word, and question it if it seems unclear or inappropriate","Follow it without saying anything","Wait to repeat it until after you give the drug","Ask your partner to remember it"],e:"This “echo” method prevents errors. You aren’t required to follow an order that seems wrong; ask for clarification."},
+{c:"4",q:"“Patient denies chest pain and shortness of breath” documents:",o:["Pertinent negatives","Subjective opinions","Vital signs","Mechanism of injury"],e:"Pertinent negatives are expected findings that are absent. They help show what you checked."},
+{c:"4",q:"Which is NOT a function of the PCR?",o:["Establishing the patient’s final diagnosis","Continuity of care","Legal record","Quality improvement and billing data"],e:"PCRs also support education and research. Diagnosis happens at the hospital."},
+{c:"4",q:"You realize after submitting your PCR that you forgot to document something. You should:",o:["Add a dated addendum following agency policy","Rewrite the whole report with an earlier time","Leave it out","Tell the patient instead"],e:"Never backdate or falsify. Late entries are added openly with the current date and time."},
+{c:"4",q:"When talking to an older patient, it’s best to:",o:["Face them, speak clearly, and not assume they have a hearing or cognitive problem","Shout every question","Talk only to family members","Use first names and nicknames right away"],e:"Introduce yourself, use their preferred name, and give them time to respond."},
+{c:"4",q:"Documenting care you didn’t actually provide is:",o:["Falsification, which can lead to legal and disciplinary action","Acceptable if the care was probably needed","Fine if a partner did it","Required by HIPAA"],e:"If a treatment wasn’t done, document that and why."},
+
+{c:"5",q:"The suffix “-itis” means:",o:["Inflammation","Removal","Pain","Enlargement"],e:"Appendicitis = inflammation of the appendix."},
+{c:"5",q:"“Dyspnea” means:",o:["Difficulty breathing","No breathing","Rapid breathing","Coughing up blood"],e:"Dys- = difficult or painful. Apnea = no breathing."},
+{c:"5",q:"Coughing up blood is called:",o:["Hemoptysis","Hematemesis","Hematuria","Hemothorax"],e:"Hematemesis = vomiting blood. Hematuria = blood in urine."},
+{c:"5",q:"“Diaphoresis” means:",o:["Profuse sweating","Fainting","Bluish skin","Swelling"],e:"Syncope = fainting. Cyanosis = bluish skin. Edema = swelling."},
+{c:"5",q:"A patient lying face down is:",o:["Prone","Supine","In Fowler’s position","In Trendelenburg position"],e:"Supine = face up. Easy memory aid: you lie on your spine when supine."},
+{c:"5",q:"A patient sitting upright with the head elevated is in:",o:["Fowler’s position","Trendelenburg position","Prone position","Recovery position"],e:"Common for patients with breathing problems."},
+{c:"5",q:"Trendelenburg position is:",o:["Supine with the feet higher than the head","Sitting upright","Lying on the left side","Face down"],e:"The shock position differs slightly: supine with only the legs raised about 6 to 12 inches."},
+{c:"5",q:"Moving an arm away from the midline is:",o:["Abduction","Adduction","Flexion","Extension"],e:"Adduction “adds” the limb back toward the body."},
+{c:"5",q:"The prefix “hepat-” refers to the:",o:["Liver","Kidney","Heart","Stomach"],e:"Nephr- or ren- = kidney, cardi- = heart, gastr- = stomach."},
+{c:"5",q:"The suffix “-ectomy” means:",o:["Surgical removal","Inflammation","Study of","Pain"],e:"Appendectomy = removal of the appendix. -otomy = cutting into."},
+{c:"5",q:"“Cyanosis” refers to:",o:["Bluish skin from low oxygen","Yellow skin from liver disease","Red, flushed skin","Pale skin"],e:"Cyan- = blue. Jaundice = yellow skin."},
+{c:"5",q:"The sole of the foot is the ___ surface.",o:["Plantar","Palmar","Dorsal","Lateral"],e:"Palmar = palm of the hand. Dorsal = back side."},
+{c:"5",q:"An imaginary vertical line from the middle of the armpit down to the ankle is the:",o:["Midaxillary line","Midclavicular line","Midline","Transverse line"],e:"The midclavicular line runs down from the middle of each collarbone."},
+
+{c:"6",q:"The flap that keeps food and liquid out of the trachea is the:",o:["Epiglottis","Uvula","Carina","Cricoid cartilage"],e:"The carina is where the trachea splits into the two main bronchi."},
+{c:"6",q:"During inhalation, the diaphragm:",o:["Contracts and moves down","Relaxes and moves up","Stays still","Pushes air out"],e:"Inhalation is active; normal exhalation is passive as the diaphragm relaxes."},
+{c:"6",q:"In a healthy person, the main stimulus to breathe is:",o:["Rising carbon dioxide levels","Falling oxygen levels","Rising blood pressure","Falling heart rate"],e:"Some patients with chronic lung disease rely more on low oxygen (hypoxic drive), but you still give oxygen when they need it."},
+{c:"6",q:"Gas exchange takes place in the:",o:["Alveoli","Bronchi","Trachea","Larynx"],e:"Oxygen moves into the capillaries and carbon dioxide moves out across the alveolar walls."},
+{c:"6",q:"The heart’s natural pacemaker is the:",o:["Sinoatrial (SA) node","Atrioventricular (AV) node","Bundle of His","Purkinje fibers"],e:"Pathway: SA node → AV node → bundle of His → bundle branches → Purkinje fibers."},
+{c:"6",q:"The heart muscle gets its own blood supply from the:",o:["Coronary arteries","Pulmonary arteries","Carotid arteries","Venae cavae"],e:"A blocked coronary artery causes myocardial ischemia and possibly infarction."},
+{c:"6",q:"Which blood component carries oxygen?",o:["Red blood cells","White blood cells","Platelets","Plasma alone"],e:"Hemoglobin in red cells binds oxygen. Platelets help clotting; white cells fight infection."},
+{c:"6",q:"Arteries carry blood ___ the heart.",o:["Away from","Toward","Only within","Only to the lungs from"],e:"Veins return blood toward the heart. Capillaries are where exchange happens."},
+{c:"6",q:"Systolic blood pressure is the pressure:",o:["When the left ventricle contracts","When the heart is relaxing","In the veins","In the lungs only"],e:"Diastolic is the pressure while the heart relaxes and refills."},
+{c:"6",q:"Which pulse is checked in an unresponsive infant?",o:["Brachial","Carotid","Radial","Dorsalis pedis"],e:"Infants have short necks, so use the brachial artery on the inside of the upper arm."},
+{c:"6",q:"Sympathetic nervous system stimulation (fight or flight) causes:",o:["Faster heart rate, dilated pupils, and opened airways","Slower heart rate and constricted pupils","Increased digestion","Lower blood pressure"],e:"The parasympathetic system does the opposite (“rest and digest”)."},
+{c:"6",q:"Which part of the brain controls balance and coordination?",o:["Cerebellum","Cerebrum","Brainstem","Spinal cord"],e:"The brainstem controls breathing and heart rate; the cerebrum handles thought, speech, and senses."},
+{c:"6",q:"How many cervical vertebrae are there?",o:["7","5","12","4"],e:"Cervical 7, thoracic 12, lumbar 5, sacral 5 (fused), coccygeal 4."},
+{c:"6",q:"The liver is mainly in which abdominal quadrant?",o:["Right upper","Left upper","Right lower","Left lower"],e:"Spleen and most of the stomach: left upper. Appendix: right lower."},
+{c:"6",q:"Insulin is produced by the:",o:["Pancreas","Adrenal glands","Thyroid","Liver"],e:"The adrenal glands release epinephrine during stress."},
+{c:"6",q:"Minute volume is calculated as:",o:["Respiratory rate × tidal volume","Heart rate × stroke volume","Tidal volume ÷ rate","Systolic − diastolic"],e:"Fast but shallow breathing can still mean poor minute volume. Cardiac output = heart rate × stroke volume."},
+{c:"6",q:"Which muscle type is under voluntary control?",o:["Skeletal","Smooth","Cardiac","All of them"],e:"Smooth muscle lines blood vessels and the GI tract. Cardiac muscle contracts on its own."},
+
+{c:"7",q:"Compared with adults, infants normally have:",o:["Faster heart and respiratory rates","Slower heart and respiratory rates","The same vital signs","Higher blood pressure"],e:"Vital sign ranges fall with age. Know your course’s table for each age group."},
+{c:"7",q:"An infant turns toward your finger when you stroke the cheek. This is the:",o:["Rooting reflex","Moro reflex","Palmar reflex","Gag reflex"],e:"The Moro (startle) reflex is when the infant throws out arms and fingers after being startled."},
+{c:"7",q:"A sunken anterior fontanelle in an infant suggests:",o:["Dehydration","Increased pressure in the skull","Normal development","Fever"],e:"A bulging fontanelle can suggest increased intracranial pressure."},
+{c:"7",q:"The anterior fontanelle usually closes by about:",o:["9 to 18 months","1 month","5 years","Birth"],e:"Until then, it can be a helpful window into hydration and pressure."},
+{c:"7",q:"A toddler screams when you try to take him from his parent. Best approach?",o:["Keep the parent close and assess the child in their lap if possible","Separate them right away","Ignore the crying","Ask the parent to leave the room"],e:"Toddlers commonly have separation anxiety."},
+{c:"7",q:"Adolescent patients often:",o:["Care about privacy and may answer more honestly away from parents","Prefer parents to answer for them","Have no concern about body image","Should not be asked direct questions"],e:"Respect privacy while following consent rules for minors."},
+{c:"7",q:"Which change commonly comes with aging?",o:["Reduced lung elasticity and heart function","Faster nerve conduction","Thicker skin","Stronger bones"],e:"Older adults also lose bone density, so minor falls can cause fractures."},
+{c:"7",q:"Why do infants tire quickly when breathing hard?",o:["They rely heavily on the diaphragm and have little reserve","They have extra lung capacity","Their ribs are fully hardened","They breathe through the mouth by choice"],e:"Watch for belly breathing, retractions, and nasal flaring."},
+
+{c:"8",q:"A proper power grip uses:",o:["Palms up, with hands about 10 inches apart","Palms down, hands touching","Fingertips only","One hand only"],e:"Grip the whole handle and keep the load close to your body."},
+{c:"8",q:"When possible, you should:",o:["Push rather than pull","Pull rather than push","Reach far in front of your body","Twist while lifting"],e:"Push at a level between your waist and shoulders when you can."},
+{c:"8",q:"During a log roll for suspected spinal injury, who directs the move?",o:["The rescuer at the patient’s head","The rescuer at the feet","The patient","Whoever is strongest"],e:"The head rescuer keeps the head in line and counts the move."},
+{c:"8",q:"Rapid extrication is indicated when:",o:["The vehicle is unsafe or the patient is unstable and needs immediate care","The patient is stable with minor pain","You have plenty of time","The patient refuses care"],e:"For a stable seated patient, a short immobilization device may be used instead, per protocol."},
+{c:"8",q:"A scoop (orthopedic) stretcher:",o:["Splits lengthwise so it can slide under a patient on the ground","Folds into a chair","Is used to carry patients down stairs while seated","Is used only for bariatric patients"],e:"It lets you lift with minimal movement of the patient."},
+{c:"8",q:"A basket (Stokes) stretcher is most useful for:",o:["Rough terrain or high-angle rescue","Routine hospital transfers","Seated patients on stairs","Short moves inside a home"],e:"It holds the patient securely during difficult carries."},
+{c:"8",q:"An unresponsive patient is breathing adequately and has no suspected trauma. Best position?",o:["Recovery position","Prone","Supine with head flat","Trendelenburg"],e:"Lying on the side helps fluids drain from the mouth and protects the airway."},
+{c:"8",q:"A woman in late pregnancy feels dizzy lying on her back. You should:",o:["Position her on her left side","Raise her head and keep her flat","Sit her straight up only","Place her prone"],e:"Lying supine lets the uterus compress the vena cava (supine hypotensive syndrome)."},
+{c:"8",q:"A patient with chest pain wants to walk to the ambulance. You should:",o:["Not let them walk; use a stretcher or stair chair","Let them walk to save time","Have them walk if pain is mild","Let them drive behind you"],e:"Exertion increases the heart’s workload."},
+{c:"8",q:"When moving a bariatric patient, you should:",o:["Plan ahead, call for enough help, and use equipment rated for the weight","Use the standard team of two","Avoid telling the patient the plan","Lift quickly to get it over with"],e:"Know your stretcher’s weight limit."},
+
+{c:"10",q:"Normal adult resting respiratory rate:",o:["12–20 breaths per minute","8–10 breaths per minute","24–30 breaths per minute","30–40 breaths per minute"],e:"Normal adult resting heart rate is 60–100 beats per minute."},
+{c:"10",q:"Normal oxygen saturation in a healthy patient is usually:",o:["95–100%","85–90%","75–85%","100% only"],e:"Many protocols give oxygen when SpO₂ is below about 94%. Treat the patient, not just the number."},
+{c:"10",q:"Which can make a pulse oximetry reading falsely normal?",o:["Carbon monoxide poisoning","Normal breathing","Warm hands","A calm patient"],e:"Cold fingers, poor perfusion, movement, and nail polish can also make readings unreliable."},
+{c:"10",q:"Capillary refill is most reliable in:",o:["Children younger than about 6","Older adults","Patients in cold weather","Smokers"],e:"Normal refill is under 2 seconds."},
+{c:"10",q:"Pale, cool, clammy skin most suggests:",o:["Shock or poor perfusion","Fever","Liver disease","Normal findings"],e:"Bluish skin suggests low oxygen. Yellow skin suggests liver problems. Flushed skin can mean heat exposure or an allergic reaction."},
+{c:"10",q:"Pinpoint pupils in an unresponsive patient suggest:",o:["Opioid overdose","Severe hypoxia","Fright","Normal sleep"],e:"Unequal pupils can suggest a head injury or stroke."},
+{c:"10",q:"Measuring blood pressure by palpation gives you:",o:["Only the systolic pressure","Only the diastolic pressure","Both systolic and diastolic","The pulse pressure"],e:"Use auscultation with a stethoscope to get both numbers."},
+{c:"10",q:"In DCAP-BTLS, “P” stands for:",o:["Punctures/penetrations","Pain","Pulses","Pallor"],e:"Deformities, Contusions, Abrasions, Punctures/penetrations, Burns, Tenderness, Lacerations, Swelling."},
+{c:"10",q:"The highest possible Glasgow Coma Scale score is:",o:["15","10","12","20"],e:"Lowest is 3. Eyes are scored 1–4, verbal 1–5, motor 1–6."},
+{c:"10",q:"A patient opens their eyes to pain, uses inappropriate words, and localizes pain. GCS?",o:["10","8","12","13"],e:"Eyes to pain = 2, inappropriate words = 3, localizes pain = 5. Total 10."},
+{c:"10",q:"A patient who knows who they are, where they are, the date, and what happened is:",o:["Alert and oriented × 4","Alert and oriented × 2","Responsive to verbal only","Unresponsive"],e:"Person, place, time, and event."},
+{c:"10",q:"Which is a significant mechanism of injury?",o:["Ejection from a vehicle","A minor fender-bender at walking speed","A twisted ankle on a curb","A paper cut"],e:"Another example: death of another occupant in the same vehicle."},
+{c:"10",q:"A trauma patient is talking but has severe bleeding from the leg. What’s the first priority?",o:["Control the bleeding","Open the airway with a jaw-thrust","Take a full set of vitals","Get a SAMPLE history"],e:"A talking patient has an open airway for now. Life-threatening bleeding gets controlled immediately."},
+{c:"10",q:"The chief complaint is best recorded:",o:["In the patient’s own words","As your field diagnosis","As the hospital diagnosis","Only if the patient is in pain"],e:"For example: “My chest feels tight.”"},
+{c:"10",q:"Why are repeated vital signs more useful than one set?",o:["The trend shows whether the patient is improving or getting worse","One set is never accurate","The hospital won’t take one set","Repeated sets are only for billing"],e:"Trends are what drive transport and treatment decisions."},
+{c:"10",q:"Which reassessment step comes first?",o:["Repeat the primary assessment","Recheck the chief complaint only","Check pupils only","Fill out the PCR"],e:"Then recheck vitals, the complaint, and the effect of your interventions."},
+{c:"10",q:"Which patient is a high transport priority?",o:["Chest pain with a systolic BP under 100","An alert patient with a sprained wrist","A stable patient with a minor cut","A patient with a mild cold"],e:"Others: difficulty breathing, uncontrolled bleeding, altered mental status, poor general impression."},
+{c:"10",q:"Breath sounds are best compared:",o:["Side to side, at the same level on each side","Only on the right side","Only over the trachea","Only on the back"],e:"Listen at the top and base of each lung, front and back, and compare."},
+
+{c:"11",q:"The most common cause of airway obstruction in an unresponsive patient is:",o:["The tongue","Food","Vomit","Dentures"],e:"Muscle relaxation lets the tongue fall back. A simple manual maneuver often fixes it."},
+{c:"11",q:"Deep, rapid breathing in a patient with diabetic ketoacidosis is called:",o:["Kussmaul respirations","Cheyne-Stokes respirations","Agonal respirations","Ataxic respirations"],e:"The body is trying to blow off acid as carbon dioxide."},
+{c:"11",q:"A cycle of breaths that grow deeper, then shallower, followed by apnea is:",o:["Cheyne-Stokes respirations","Kussmaul respirations","Normal breathing","Wheezing"],e:"Often seen with stroke or head injury."},
+{c:"11",q:"Agonal respirations:",o:["Are occasional gasps that don’t provide adequate breathing","Are a normal pattern during sleep","Mean the patient is breathing well","Require only a nasal cannula"],e:"Treat agonal breathing as inadequate. In an unresponsive patient without a pulse, start CPR."},
+{c:"11",q:"Which is a sign of inadequate breathing?",o:["Retractions and use of accessory muscles","Equal chest rise","Normal skin color","Rate of 16 with easy effort"],e:"Others: nasal flaring, tripod position, cyanosis, altered mental status."},
+{c:"11",q:"A full oxygen cylinder is pressurized to about:",o:["2,000 psi","200 psi","500 psi","10,000 psi"],e:"Pressure drops as you use it, so check before each call."},
+{c:"11",q:"The pin-indexing safety system:",o:["Prevents attaching the wrong regulator to a gas cylinder","Measures flow rate","Humidifies oxygen","Locks the stretcher"],e:"It ensures an oxygen regulator only fits an oxygen cylinder."},
+{c:"11",q:"A nonrebreather mask is typically run at:",o:["10–15 L/min","1–6 L/min","25–30 L/min","Any rate"],e:"Inflate the reservoir bag before placing it on the patient. Nasal cannula runs at 1–6 L/min."},
+{c:"11",q:"Ventilating with too much volume or force can cause:",o:["Gastric distention and vomiting","Better oxygenation","Improved cardiac output","Faster recovery"],e:"Give each breath over about 1 second, just enough for visible chest rise."},
+{c:"11",q:"The “E-C clamp” technique is used to:",o:["Seal a mask to the face during BVM ventilation","Insert an OPA","Measure an NPA","Hold a suction catheter"],e:"Thumb and index finger form the C on the mask; the other fingers form the E along the jaw. Two-person BVM gives a better seal."},
+{c:"11",q:"Which is a contraindication to CPAP?",o:["The patient can’t follow commands or protect their airway","Alert patient with pulmonary edema","Moderate respiratory distress","SpO₂ of 90%"],e:"Others: hypotension, suspected pneumothorax, vomiting, facial trauma. Follow your protocol."},
+{c:"11",q:"How do you ventilate a patient who breathes through a stoma?",o:["Seal a BVM (infant or child mask) over the stoma","Seal the mask over the mouth and nose only","Insert an OPA","Use a nasal cannula in the stoma"],e:"If air escapes from the mouth and nose, you may need to seal them."},
+{c:"11",q:"A rigid (tonsil-tip/Yankauer) catheter is best for suctioning:",o:["The mouth and oropharynx","The nose","A stoma","An infant’s nose"],e:"Soft (French) catheters are used for the nose, stomas, and places a rigid tip can’t reach."},
+{c:"11",q:"Maximum suction time for an infant:",o:["5 seconds","10 seconds","15 seconds","30 seconds"],e:"Adults 15 seconds, children 10 seconds, infants 5 seconds."},
+{c:"11",q:"How is an NPA sized?",o:["From the tip of the nose to the earlobe","From the corner of the mouth to the earlobe","From the chin to the nose","By the patient’s weight"],e:"Lubricate with a water-soluble lubricant and insert with the bevel toward the septum."},
+{c:"11",q:"In an adult, an OPA is usually inserted:",o:["Upside down, then rotated 180 degrees","Sideways, then rotated 45 degrees","Through the nose","Only with a tongue depressor"],e:"In children, use a tongue depressor and insert it right side up to avoid injuring the palate."},
+{c:"11",q:"A patient with COPD is in respiratory distress with low SpO₂. Oxygen?",o:["Give oxygen as needed and monitor closely","Never give oxygen to COPD patients","Give oxygen only if unresponsive","Use a BVM regardless of breathing"],e:"Never withhold oxygen from a hypoxic patient out of concern for hypoxic drive."},
+{c:"11",q:"A Venturi mask is used to:",o:["Deliver a precise oxygen concentration","Ventilate an apneic patient","Suction the airway","Measure carbon dioxide"],e:"It mixes room air with oxygen in set proportions."},
+
+{c:"12",q:"“Proventil” is a ___ name for albuterol.",o:["Trade","Generic","Chemical","Official"],e:"Generic names (albuterol, nitroglycerin) are standard. Trade names are brand names."},
+{c:"12",q:"Which medication do EMTs commonly give from their own supply, per protocol?",o:["Oral glucose","Nitroglycerin","The patient’s albuterol","Insulin"],e:"Oxygen, oral glucose, and aspirin are commonly carried. EMTs typically assist with a patient’s own nitro, inhaler, or epinephrine auto-injector."},
+{c:"12",q:"Nitroglycerin is usually given by which route?",o:["Sublingual","Intramuscular","Oral swallowed","Inhalation"],e:"Under the tongue for fast absorption."},
+{c:"12",q:"An epinephrine auto-injector is given:",o:["Intramuscularly into the lateral thigh","Under the tongue","Into a vein","By inhalation"],e:"It can go through clothing if needed."},
+{c:"12",q:"Oral glucose comes as a:",o:["Gel","Spray","Suspension","Gas"],e:"Activated charcoal is a suspension; oxygen is a gas; nitro can be tablets or spray."},
+{c:"12",q:"Which is a contraindication to oral glucose?",o:["The patient can’t swallow or protect their airway","The patient is diabetic","The patient is alert","The patient is hungry"],e:"Giving anything by mouth to a patient who can’t protect their airway risks aspiration."},
+{c:"12",q:"Epinephrine helps in anaphylaxis by:",o:["Constricting blood vessels and opening the airways","Slowing the heart","Lowering blood sugar","Thinning the blood"],e:"Side effects include rapid heart rate, anxiety, tremor, and pale skin."},
+{c:"12",q:"Albuterol is a:",o:["Bronchodilator","Antiplatelet","Vasodilator","Opioid antagonist"],e:"It relaxes the smooth muscle of the lower airways."},
+{c:"12",q:"Aspirin helps in ACS because it:",o:["Reduces platelet clumping and clot growth","Dissolves existing clots completely","Dilates the coronary arteries","Raises blood pressure"],e:"It’s usually chewed. Dose per protocol."},
+{c:"12",q:"After naloxone, a patient wakes up suddenly. Be ready for:",o:["Withdrawal symptoms, vomiting, or combativeness","Immediate sleep","A drop in heart rate to 30","Wheezing in every patient"],e:"Naloxone may wear off before the opioid does, so keep monitoring."},
+{c:"12",q:"Pharmacokinetics describes:",o:["How the body absorbs, distributes, metabolizes, and eliminates a drug","What a drug does to the body","Drug brand names","Medication rights"],e:"Pharmacodynamics is the reverse: the drug’s effect on the body."},
+{c:"12",q:"Steps for helping with a metered-dose inhaler include:",o:["Shake it, have the patient exhale, seal lips, press and inhale deeply, then hold the breath","Spray it into the air first","Have the patient inhale before sealing","Give as many puffs as needed without limits"],e:"A spacer improves delivery. Check that it’s the patient’s own, not expired, and permitted by protocol."},
+{c:"12",q:"Before helping a patient take their own medication, you should check:",o:["That it’s prescribed to them, not expired, and allowed by protocol","Only the color of the pill","How much it cost","Nothing if the patient is sure"],e:"Plus the rights: patient, medication, dose, route, time, documentation."},
+{c:"12",q:"Activated charcoal works by:",o:["Binding certain toxins in the gut","Neutralizing all poisons in the blood","Causing vomiting","Speeding up absorption"],e:"Contraindicated with altered mental status, inability to swallow, or caustic ingestions."},
+
+{c:"13",q:"The perfusion triangle includes:",o:["Heart (pump), blood vessels (container), and blood (contents)","Lungs, kidneys, and liver","Airway, breathing, and circulation","Brain, spine, and nerves"],e:"Shock results when any side fails."},
+{c:"13",q:"Anaphylaxis mainly affects which part of the perfusion triangle?",o:["The blood vessels (container)","The pump","The contents","The lungs only"],e:"Widespread vasodilation makes the container too big for the blood volume."},
+{c:"13",q:"After a spinal cord injury, a patient has low BP, warm dry skin, and a normal heart rate. This suggests:",o:["Neurogenic shock","Hypovolemic shock","Cardiogenic shock","Obstructive shock"],e:"Loss of nerve control causes vasodilation. It’s a type of distributive shock."},
+{c:"13",q:"Fever, rapid heart rate, low BP, and confusion in a patient with an infection suggest:",o:["Septic shock","Cardiogenic shock","Psychogenic shock","Obstructive shock"],e:"Septic shock is distributive. Early recognition and transport save lives."},
+{c:"13",q:"Fainting from a sudden, temporary drop in blood flow to the brain (for example, after bad news) is:",o:["Psychogenic shock","Septic shock","Hypovolemic shock","Cardiogenic shock"],e:"It usually resolves quickly when the patient lies flat, but check for injuries from the fall."},
+{c:"13",q:"Beck’s triad (JVD, muffled heart sounds, narrowing pulse pressure) suggests:",o:["Cardiac tamponade","Tension pneumothorax","Hypovolemic shock","Asthma"],e:"Tamponade is a cause of obstructive shock."},
+{c:"13",q:"Which finding suggests tension pneumothorax?",o:["Severe dyspnea with absent breath sounds on one side and JVD","Wheezing on both sides","Crackles at both bases","Clear, equal breath sounds"],e:"Tracheal deviation is a late sign. It causes obstructive shock."},
+{c:"13",q:"A narrowing pulse pressure in a trauma patient suggests:",o:["Compensation through vasoconstriction","Recovery from shock","Normal findings","Overhydration"],e:"The diastolic pressure rises as vessels constrict, bringing the two numbers closer."},
+{c:"13",q:"The three stages of shock, in order:",o:["Compensated, decompensated, irreversible","Mild, moderate, severe","Early, late, recovery","Hypovolemic, cardiogenic, distributive"],e:"In irreversible shock, tissue and organ damage can’t be undone even with treatment."},
+{c:"13",q:"Why can shock be hard to spot in an older adult?",o:["Medications like beta blockers may prevent a fast heart rate","Older adults never go into shock","Their blood pressure always rises","Their skin is always warm"],e:"Don’t rely on heart rate alone. Look at mental status, skin, and the whole picture."},
+{c:"13",q:"Children in shock often:",o:["Compensate well and then deteriorate very quickly","Show low BP early","Have slow heart rates early","Don’t need rapid transport"],e:"Falling BP is a very late sign in children."},
+{c:"13",q:"Why prevent heat loss in a patient in shock?",o:["Hypothermia worsens clotting and shock","It makes the patient sleepy","It lowers blood sugar","It speeds up transport"],e:"Cover the patient and keep the ambulance warm."},
+{c:"13",q:"A patient in hemorrhagic shock asks for water. You should:",o:["Not give anything by mouth","Give small sips","Give a sports drink","Give a full glass"],e:"Thirst is a sign of volume loss. The patient may need surgery."},
+
+{c:"14",q:"Where do you place your hands for adult chest compressions?",o:["Center of the chest, on the lower half of the sternum","Over the upper sternum","Over the left ribs","On the xiphoid process"],e:"Avoid compressing the xiphoid process."},
+{c:"14",q:"Child compression depth:",o:["At least one-third of the chest depth, about 2 inches","About 1 inch","About 3 inches","Half the chest depth"],e:"Infant: at least one-third, about 1.5 inches."},
+{c:"14",q:"Two-rescuer infant and child CPR ratio:",o:["15:2","30:2","5:1","10:2"],e:"Single rescuer: 30:2 for infants and children too."},
+{c:"14",q:"Where should you check for a pulse in an unresponsive child?",o:["Carotid or femoral","Radial","Brachial only","Dorsalis pedis"],e:"Infants: brachial."},
+{c:"14",q:"An infant has a pulse of 50 with poor perfusion despite good ventilation. You should:",o:["Start chest compressions","Keep ventilating only","Wait for the heart rate to rise","Give oxygen by blow-by only"],e:"In infants and children, a heart rate under 60 with signs of poor perfusion needs CPR."},
+{c:"14",q:"Once an advanced airway is in place during CPR, ventilate at:",o:["1 breath every 6 seconds while compressions continue","2 breaths after every 30 compressions","1 breath every 2 seconds","1 breath per minute"],e:"Compressions no longer pause for breaths."},
+{c:"14",q:"For a 5-year-old in cardiac arrest, pediatric AED pads aren’t available. You should:",o:["Use adult pads, making sure they don’t touch (front and back if needed)","Skip the AED","Cut the adult pads in half","Wait for paramedics"],e:"Pediatric pads or a dose attenuator are preferred for children under 8 when available."},
+{c:"14",q:"The patient has a medication patch where an AED pad should go. You should:",o:["Remove the patch and wipe the skin before placing the pad","Place the pad over the patch","Skip that pad","Not use the AED"],e:"Also: dry a wet chest, and don’t place pads directly over an implanted device."},
+{c:"14",q:"A patient in cardiac arrest has a bulge under the skin of the upper left chest. You should:",o:["Place the AED pad so it isn’t directly over the device","Not use the AED","Put the pad right on top of it","Remove the device"],e:"That’s likely a pacemaker or implanted defibrillator."},
+{c:"14",q:"Which is NOT a reason to stop CPR?",o:["Fifteen minutes have passed","Return of spontaneous circulation","Care is transferred to equal or higher-level providers","A valid DNR is presented"],e:"Other reasons: you’re too exhausted to continue, the scene becomes unsafe, or a physician orders it."},
+{c:"14",q:"A choking adult becomes unresponsive. You should:",o:["Start CPR, and look in the mouth before giving breaths","Keep doing abdominal thrusts standing","Do blind finger sweeps","Leave to get help first"],e:"Remove an object only if you can see it."},
+{c:"14",q:"How do you relieve a severe airway obstruction in a responsive infant?",o:["Back slaps and chest thrusts","Abdominal thrusts","Blind finger sweeps","Holding the infant upside down and shaking"],e:"Abdominal thrusts are not used on infants."},
+{c:"14",q:"A choking patient is in late pregnancy. You should use:",o:["Chest thrusts","Abdominal thrusts","Back slaps only","Nothing until she’s unresponsive"],e:"Chest thrusts are also used for patients too large to reach around."},
+{c:"14",q:"A person with a partial airway obstruction can cough forcefully and speak. You should:",o:["Encourage them to keep coughing and watch closely","Start abdominal thrusts","Do a finger sweep","Start CPR"],e:"Step in if the cough becomes weak, they can’t speak, or they turn cyanotic."},
+{c:"14",q:"Which link in the chain of survival most improves outcomes after early CPR in VF arrest?",o:["Rapid defibrillation","Waiting for advanced life support","Transport before shocking","Rescue breaths alone"],e:"Every minute without defibrillation in VF lowers survival."},
+{c:"14",q:"After ROSC, you should:",o:["Support airway and breathing, keep the AED attached, and transport","Remove the AED pads","Let the patient walk","Stop monitoring"],e:"Patients can re-arrest, so keep reassessing."},
+{c:"14",q:"If the AED says “no shock advised,” you should:",o:["Resume CPR right away, starting with compressions","Turn off the AED","Wait 2 minutes before doing anything","Check pupils"],e:"Re-analyze after 2 more minutes of CPR."},
+
+{c:"15",q:"For an unresponsive medical patient, after the primary assessment you should:",o:["Do a rapid full-body exam, get vitals, and gather history from bystanders","Do a focused exam of one area","Only ask the patient SAMPLE questions","Skip vitals until arrival"],e:"Unresponsive patients can’t give you history, so the exam comes first."},
+{c:"15",q:"A pandemic is:",o:["An outbreak spreading across countries worldwide","A local outbreak","A single case of illness","A noncontagious disease"],e:"An epidemic is a larger-than-expected outbreak in a region."},
+{c:"15",q:"Sickle cell crisis falls under which category of medical emergency?",o:["Hematologic","Endocrine","Neurologic","Urologic"],e:"Hematologic emergencies involve the blood. Kidney stones would be urologic."},
+{c:"15",q:"An EMT’s conclusion about what’s likely wrong is called a:",o:["Field impression","Final diagnosis","Differential prognosis","Medical order"],e:"It guides treatment and transport but can change as you learn more."},
+{c:"15",q:"Why does destination matter for medical patients?",o:["Some conditions (like stroke or heart attack) need specialty centers","All hospitals offer identical care","The closest hospital is always required","Patients can’t choose"],e:"Follow protocol for specialty centers and patient preference when appropriate."},
+{c:"15",q:"Which patient shows possible signs of sepsis?",o:["Fever, rapid heart rate, rapid breathing, and new confusion","Low-grade fever only","Sneezing and a runny nose","Mild sore throat with normal vitals"],e:"Report suspected sepsis early to the receiving hospital."},
+
+{c:"16",q:"A patient with severe asthma suddenly has very quiet breath sounds and is drowsy. This suggests:",o:["Little air movement and impending respiratory failure","The attack is ending","Normal recovery","Upper airway obstruction"],e:"A “silent chest” is an ominous sign. Prepare to ventilate."},
+{c:"16",q:"Pursed-lip breathing and a barrel chest are typical of:",o:["COPD","Croup","Pulmonary embolism","Hyperventilation"],e:"Pursed lips help keep small airways open during exhalation."},
+{c:"16",q:"Fever, productive cough, and crackles in one area of the lung suggest:",o:["Pneumonia","Asthma","Croup","Spontaneous pneumothorax"],e:"Pneumonia is a lung infection. Older adults may show only confusion or weakness."},
+{c:"16",q:"Sudden shortness of breath and sharp chest pain after a long flight suggest:",o:["Pulmonary embolism","Asthma","Croup","Bronchitis"],e:"Other risk factors: recent surgery, immobility, birth control pills, smoking."},
+{c:"16",q:"A tall, thin young man has sudden sharp chest pain and decreased breath sounds on one side. Most likely?",o:["Spontaneous pneumothorax","Pneumonia","Asthma","Myocardial infarction"],e:"A weak spot in the lung ruptures and air collects in the chest."},
+{c:"16",q:"An anxious patient breathes rapidly with tingling fingers and spasms in the hands. Best approach?",o:["Calm them, coach slower breathing, and rule out serious causes","Have them breathe into a paper bag","Ignore it","Use a BVM"],e:"Rapid breathing can come from serious conditions, so don’t assume it’s anxiety."},
+{c:"16",q:"A barking, seal-like cough with stridor in a toddler suggests:",o:["Croup","Epiglottitis","Asthma","Pertussis"],e:"Croup is usually viral with gradual onset, often at night."},
+{c:"16",q:"A child with sudden high fever, drooling, and tripod positioning may have epiglottitis. You should NOT:",o:["Look in the throat or place anything in the mouth","Keep the child calm","Let the child stay with the parent","Give oxygen as tolerated"],e:"Agitation can trigger complete airway obstruction."},
+{c:"16",q:"Coughing fits ending in a high-pitched “whoop” suggest:",o:["Pertussis","Croup","Asthma","COPD"],e:"Pertussis (whooping cough) is very contagious. Wear a mask."},
+{c:"16",q:"Rhonchi are:",o:["Coarse, rattling sounds from mucus in larger airways","High-pitched inspiratory sounds","Fine popping at the lung bases","Absent breath sounds"],e:"Common with bronchitis and pneumonia."},
+{c:"16",q:"A patient sitting upright, leaning forward with hands on knees, is in the:",o:["Tripod position","Recovery position","Fowler’s position","Trendelenburg position"],e:"A classic sign of respiratory distress."},
+{c:"16",q:"An infant with wheezing, runny nose, and difficulty feeding during winter most likely has:",o:["RSV bronchiolitis","Epiglottitis","Spontaneous pneumothorax","Pulmonary embolism"],e:"RSV is very contagious and a common cause of lower respiratory infection in infants."},
+{c:"16",q:"Before helping with a patient’s inhaler, confirm:",o:["Signs of respiratory distress, the inhaler is theirs, and protocol or medical control allows it","Only that the patient asked","That it has been used before","That the patient is unresponsive"],e:"Also check that the maximum dose hasn’t already been taken and it isn’t expired."},
+
+{c:"17",q:"Which is the heart’s electrical conduction pathway?",o:["SA node → AV node → bundle of His → Purkinje fibers","AV node → SA node → Purkinje fibers → bundle of His","Purkinje fibers → bundle of His → AV node → SA node","SA node → Purkinje fibers → AV node"],e:"The AV node briefly delays the impulse so the ventricles can fill."},
+{c:"17",q:"Atherosclerosis is:",o:["Buildup of fatty plaque inside arteries","Inflammation of the heart lining","An irregular heartbeat","A weakened heart valve"],e:"Plaque can rupture and trigger a clot, causing ACS."},
+{c:"17",q:"Which is a controllable risk factor for heart disease?",o:["Smoking","Age","Family history","Sex"],e:"Others: high blood pressure, high cholesterol, diabetes, obesity, inactivity."},
+{c:"17",q:"Stable angina is typically relieved by:",o:["Rest or nitroglycerin","Eating a meal","Lying flat","Coughing"],e:"Pain that persists despite rest and nitro raises concern for MI."},
+{c:"17",q:"The most common initial rhythm in adult sudden cardiac arrest is:",o:["Ventricular fibrillation","Asystole","Normal sinus rhythm","Sinus bradycardia"],e:"VF is shockable, which is why early AED use matters."},
+{c:"17",q:"Which rhythms can an AED shock?",o:["Ventricular fibrillation and pulseless ventricular tachycardia","Asystole","Normal sinus rhythm","Any rhythm with a pulse"],e:"Asystole (flatline) is not shockable."},
+{c:"17",q:"Left-sided heart failure commonly causes:",o:["Fluid backing up into the lungs (pulmonary edema)","Swollen ankles first","Fever","Hives"],e:"Right-sided failure causes JVD and swelling in the legs and abdomen."},
+{c:"17",q:"Sudden tearing chest pain radiating to the back, with different BP in each arm, suggests:",o:["Aortic dissection","Stable angina","Pneumonia","Asthma"],e:"Treat as a life-threatening emergency and transport rapidly."},
+{c:"17",q:"A patient with a left ventricular assist device (LVAD) may:",o:["Not have a palpable pulse","Always have a high BP","Not need transport","Never need CPR"],e:"Assess perfusion through mental status, skin, and breathing. Bring the device equipment and caregivers if possible."},
+{c:"17",q:"A patient sleeps sitting up on three pillows because lying flat makes breathing harder. This is:",o:["Orthopnea, suggesting heart failure","Normal in all adults","A sign of asthma only","Hyperventilation"],e:"Orthopnea is a classic heart failure clue."},
+{c:"17",q:"After assisting with one dose of nitroglycerin, before another dose you should first:",o:["Recheck the blood pressure and reassess","Give the next dose immediately","Lay the patient flat","Give aspirin again"],e:"Many protocols allow repeat doses about every 5 minutes, up to 3 total, if BP stays adequate. Follow yours."},
+{c:"17",q:"Severe headache, confusion, and a very high BP suggest:",o:["Hypertensive emergency","Hypoglycemia","Septic shock","Angina"],e:"Can lead to stroke. Transport promptly and reassess."},
+{c:"17",q:"A patient’s implanted defibrillator delivers a shock while you’re touching them. This means:",o:["The shock is low energy and generally not dangerous to you","You will be seriously injured","The AED is no longer needed","The patient doesn’t need transport"],e:"An ICD firing suggests a dangerous rhythm. Assess and transport."},
+{c:"17",q:"Atypical heart attack signs in women may include:",o:["Fatigue, indigestion, jaw or back pain, and shortness of breath","Only crushing chest pain","Fever and rash","Itching"],e:"Have a high index of suspicion in women, older adults, and people with diabetes."},
+
+{c:"S",s:"D",q:"What is the most likely cause?",o:["Croup","Epiglottitis","Asthma","Foreign body in the esophagus"],e:"Barking cough, inspiratory stridor, low fever, gradual onset at night: classic croup."},
+{c:"S",s:"D",q:"Which approach is best?",o:["Keep him calm in his mother’s lap and give humidified or blow-by oxygen as indicated","Lay him flat on the stretcher alone","Look in his throat with a tongue depressor","Have him breathe into a paper bag"],e:"Agitation worsens airway narrowing. Keep the child comfortable and calm."},
+{c:"S",s:"D",q:"Which change shows he’s getting worse?",o:["He becomes drowsy with retractions and quieter breathing","He’s crying loudly","He asks for a drink","His cough sounds the same"],e:"Fatigue and a falling level of consciousness signal respiratory failure."},
+{c:"S",s:"D",q:"If he deteriorates and breathing becomes inadequate, you should:",o:["Assist ventilations with an appropriately sized BVM","Keep using blow-by oxygen only","Wait for him to improve","Give an oral medication"],e:"Size equipment for the child and give breaths just enough to make the chest rise."},
+{c:"S",s:"E",q:"After making sure the scene is safe, what’s next?",o:["Check responsiveness, then breathing and pulse together for no more than 10 seconds","Ask bystanders for his medical history","Take his blood pressure","Open his airway and look for 30 seconds"],e:"Checking breathing and pulse at the same time minimizes delay."},
+{c:"S",s:"E",q:"He has no pulse and only gasps. You should:",o:["Start compressions and have your partner attach the AED","Give oxygen by nonrebreather","Wait for the paramedics","Place him in the recovery position"],e:"Gasping is not normal breathing."},
+{c:"S",s:"E",q:"The AED advises a shock. Correct sequence?",o:["Clear everyone, shock, and immediately resume compressions","Shock while your partner keeps compressing","Check a pulse, then shock","Give two breaths, then shock"],e:"No pulse check right after a shock. Do 2 minutes of CPR first."},
+{c:"S",s:"E",q:"After two cycles, he begins moving and breathing on his own. You should:",o:["Check pulse and breathing, support ventilation as needed, keep the AED on, and transport","Remove the AED pads","Let him sit up and walk","Stop monitoring"],e:"Post-arrest patients can re-arrest. Reassess often."},
+{c:"S",s:"F",q:"What type of shock is she in?",o:["Distributive (anaphylactic)","Hypovolemic","Cardiogenic","Obstructive"],e:"An allergic reaction causes widespread vasodilation and leaky vessels."},
+{c:"S",s:"F",q:"What’s the key treatment?",o:["Help her use her epinephrine auto-injector per protocol","Oral glucose","Aspirin","Nitroglycerin"],e:"Inject into the lateral thigh, then reassess."},
+{c:"S",s:"F",q:"After epinephrine, which effects are expected?",o:["Faster heart rate, anxiety, and tremor","Slower heart rate","Drowsiness","Lower blood pressure"],e:"Improvement shows as easier breathing, less swelling, and better BP."},
+{c:"S",s:"F",q:"Symptoms return during transport. You should:",o:["Contact medical control or follow protocol about a second dose and support her ABCs","Assume it’s a side effect and ignore it","Give her water","Lay her prone"],e:"Biphasic reactions can happen. Keep reassessing."},
+{c:"S",s:"G",q:"Before accepting his refusal, you must:",o:["Assess his decision-making capacity and explain the risks of refusing","Have him sign immediately","Call his employer","Take him anyway"],e:"Check that he’s alert, oriented, understands the risks, and isn’t impaired."},
+{c:"S",s:"G",q:"He smells of alcohol, slurs his words, and keeps repeating questions. Now what?",o:["He may lack capacity; follow protocol, involve medical control and law enforcement as needed","Accept the refusal anyway","Leave because he said no","Ask him to sign twice"],e:"An impaired patient can’t make an informed refusal."},
+{c:"S",s:"G",q:"If a competent patient refuses, which should be documented?",o:["Assessment, capacity, risks explained, advice to call back, and signatures/witnesses","Only that he refused","Nothing, since there was no transport","Just the time you left"],e:"Thorough documentation protects both the patient and you."},
+{c:"S",s:"H",q:"What is the most likely problem?",o:["Acute pulmonary edema from heart failure","Asthma attack","Spontaneous pneumothorax","Croup"],e:"Crackles, frothy sputum, ankle swelling, and orthopnea all point to heart failure."},
+{c:"S",s:"H",q:"How should she be positioned?",o:["Sitting upright","Flat on her back","Trendelenburg","Prone"],e:"Upright positioning eases the work of breathing and reduces fluid in the lungs."},
+{c:"S",s:"H",q:"Which treatment fits, per protocol?",o:["Oxygen and CPAP if she’s alert and her BP is adequate","Withhold oxygen","Oral glucose","Have her lie down and rest"],e:"CPAP pushes fluid back out of the alveoli. Reassess BP and mental status."},
+{c:"S",s:"H",q:"Which finding means you should stop CPAP and assist ventilations?",o:["She becomes drowsy and can’t follow commands","Her SpO₂ improves","She says she’s breathing easier","Her crackles decrease"],e:"CPAP requires a patient who can protect their airway and breathe on their own."},
+{c:"S",s:"I",q:"What should you do first?",o:["Stay out of the garage and request the fire department","Run in and pull them out","Hold your breath and go in","Open the door and enter immediately"],e:"Suspected carbon monoxide makes the scene unsafe without proper protection."},
+{c:"S",s:"I",q:"Once patients are removed, SpO₂ reads 99%. You should:",o:["Not trust it, because carbon monoxide can falsely raise the reading","Assume oxygen levels are fine","Withhold oxygen","Release them on scene"],e:"Pulse oximeters can’t tell carbon monoxide from oxygen on hemoglobin."},
+{c:"S",s:"I",q:"Best oxygen treatment?",o:["High-concentration oxygen by nonrebreather","Nasal cannula at 2 L/min","No oxygen if they’re awake","Room air only"],e:"Assist ventilations if breathing is inadequate."},
+{c:"S",s:"J",q:"Which type of shock is most likely?",o:["Hypovolemic","Cardiogenic","Neurogenic","Obstructive"],e:"Fluid loss from vomiting and diarrhea."},
+{c:"S",s:"J",q:"The sunken fontanelle suggests:",o:["Dehydration","Increased pressure in the skull","Normal development","Fever only"],e:"Fewer wet diapers and delayed capillary refill support this."},
+{c:"S",s:"J",q:"Where should you check the infant’s pulse?",o:["Brachial artery","Carotid artery","Radial artery","Femoral only"],e:"Use the inside of the upper arm."},
+{c:"S",s:"J",q:"Which is appropriate care?",o:["Keep the infant warm, support ABCs, and transport promptly","Give bottles of water","Delay transport until feeding","Wrap in cold wet towels"],e:"Infants lose heat fast and can deteriorate suddenly."}
+]);
+
+CARDS.push(...[
+{c:"1",q:"List the four levels of EMS providers from basic to advanced.",a:"Emergency Medical Responder (EMR), EMT, Advanced EMT (AEMT), Paramedic."},
+{c:"1",q:"Scope of practice vs standard of care.",a:"Scope: what you’re legally allowed to do. Standard of care: how a similarly trained EMT would act in the same situation."},
+{c:"1",q:"What is a PSAP?",a:"Public safety answering point: the call center that receives 911 calls."},
+{c:"1",q:"What is continuous quality improvement (CQI)?",a:"An ongoing process of reviewing calls and care to find and fix problems."},
+{c:"2",q:"Name the five stages of grief in order.",a:"Denial, anger, bargaining, depression, acceptance."},
+{c:"2",q:"Airborne vs bloodborne diseases, with examples.",a:"Airborne: TB, measles (use N95). Bloodborne: hepatitis B, hepatitis C, HIV."},
+{c:"2",q:"What do you do after a needlestick?",a:"Wash with soap and water, report immediately to the designated officer, and get medical evaluation."},
+{c:"2",q:"How do you approach a possible hazmat scene?",a:"Stay upwind and uphill at a safe distance, identify the material with binoculars and the ERG, and let trained teams enter."},
+{c:"3",q:"Assault vs battery.",a:"Assault: putting someone in fear of bodily harm. Battery: touching someone without consent."},
+{c:"3",q:"What do Good Samaritan laws protect, and what don’t they?",a:"Protect good-faith care within your training without pay. Don’t protect gross negligence."},
+{c:"3",q:"Who can be an emancipated minor?",a:"Varies by state, often married, in the military, or court-emancipated. They can consent to their own care."},
+{c:"3",q:"Definitive signs of death.",a:"Decapitation, decomposition, dependent lividity, rigor mortis, injuries incompatible with life."},
+{c:"3",q:"What is abandonment?",a:"Ending care without transferring the patient to someone of equal or higher training."},
+{c:"3",q:"Slander vs libel.",a:"Slander: false, damaging spoken statements. Libel: false, damaging written statements."},
+{c:"3",q:"What should you do at a crime scene?",a:"Care for the patient first, disturb as little as possible, don’t cut through holes in clothing, and tell police what you moved."},
+{c:"4",q:"Good radio technique.",a:"Press the button, wait about 1 second, speak clearly and briefly (under 30 seconds), use plain language, and don’t say patient names."},
+{c:"4",q:"What is the echo method?",a:"Repeating medical control’s order back word for word to confirm it."},
+{c:"4",q:"What are pertinent negatives?",a:"Expected findings that are absent, documented to show you checked (e.g., denies chest pain)."},
+{c:"4",q:"Functions of the PCR.",a:"Continuity of care, legal record, education, administrative/billing, research, and quality improvement."},
+{c:"5",q:"Meaning of -itis, -ectomy, -algia, -megaly.",a:"Inflammation; surgical removal; pain; enlargement."},
+{c:"5",q:"Hemoptysis vs hematemesis.",a:"Hemoptysis: coughing up blood. Hematemesis: vomiting blood."},
+{c:"5",q:"Prone, supine, Fowler’s, Trendelenburg.",a:"Face down; face up; sitting upright; supine with feet higher than the head."},
+{c:"5",q:"Abduction vs adduction.",a:"Abduction moves away from the midline; adduction moves toward it."},
+{c:"5",q:"Dyspnea, apnea, syncope, diaphoresis.",a:"Difficulty breathing; no breathing; fainting; heavy sweating."},
+{c:"6",q:"What happens to the diaphragm during inhalation and exhalation?",a:"Inhalation: contracts and moves down (active). Exhalation: relaxes and moves up (passive)."},
+{c:"6",q:"Primary stimulus to breathe vs hypoxic drive.",a:"Primary: rising CO₂. Hypoxic drive: low oxygen, a backup some chronic lung disease patients rely on."},
+{c:"6",q:"Trace the heart’s conduction system.",a:"SA node → AV node → bundle of His → bundle branches → Purkinje fibers."},
+{c:"6",q:"Functions of red cells, white cells, platelets.",a:"Carry oxygen; fight infection; help blood clot."},
+{c:"6",q:"Sympathetic vs parasympathetic effects.",a:"Sympathetic: fight or flight (faster HR, dilated pupils, bronchodilation). Parasympathetic: rest and digest (slower HR, digestion)."},
+{c:"6",q:"Cerebrum, cerebellum, brainstem.",a:"Thought, senses, speech; balance and coordination; breathing, heart rate, and other vital functions."},
+{c:"6",q:"Number of vertebrae in each spinal section.",a:"Cervical 7, thoracic 12, lumbar 5, sacral 5 (fused), coccygeal 4."},
+{c:"6",q:"Minute volume and cardiac output formulas.",a:"Minute volume = respiratory rate × tidal volume. Cardiac output = heart rate × stroke volume."},
+{c:"6",q:"Main organs in each abdominal quadrant.",a:"RUQ: liver, gallbladder. LUQ: spleen, stomach. RLQ: appendix. LLQ: part of the colon."},
+{c:"7",q:"Rooting vs Moro reflex.",a:"Rooting: turns toward a touch on the cheek. Moro: startle, arms and fingers spread."},
+{c:"7",q:"Sunken vs bulging fontanelle.",a:"Sunken: dehydration. Bulging: increased pressure in the skull."},
+{c:"7",q:"Common physical changes in older adults.",a:"Less lung elasticity, weaker heart function, thinner skin, less bone density, slower reaction times."},
+{c:"8",q:"Power lift and power grip basics.",a:"Feet shoulder-width apart, back locked, lift with legs. Grip palms up, hands about 10 inches apart."},
+{c:"8",q:"When would you use rapid extrication?",a:"When the vehicle is unsafe or the patient is unstable and needs immediate care."},
+{c:"8",q:"Recovery position: who and why?",a:"Unresponsive patients breathing adequately without suspected spinal injury. It lets fluids drain and protects the airway."},
+{c:"8",q:"Why place a late-pregnancy patient on her left side?",a:"Lying flat lets the uterus compress the vena cava and drop BP (supine hypotensive syndrome)."},
+{c:"10",q:"Normal adult respiratory rate, heart rate, and SpO₂.",a:"RR 12–20, HR 60–100, SpO₂ 95–100%."},
+{c:"10",q:"What does DCAP-BTLS stand for?",a:"Deformities, Contusions, Abrasions, Punctures/penetrations, Burns, Tenderness, Lacerations, Swelling."},
+{c:"10",q:"Glasgow Coma Scale components and range.",a:"Eyes 1–4, verbal 1–5, motor 1–6. Total 3 to 15."},
+{c:"10",q:"What can make pulse oximetry unreliable?",a:"Carbon monoxide poisoning, cold extremities, poor perfusion, movement, nail polish."},
+{c:"10",q:"Skin color clues: pale, blue, flushed, yellow.",a:"Poor perfusion or shock; low oxygen; heat, allergy, or CO exposure; liver problems."},
+{c:"10",q:"Pupil clues: pinpoint, dilated, unequal.",a:"Pinpoint: opioids. Dilated and unreactive: hypoxia, drugs, or death. Unequal: head injury or stroke."},
+{c:"10",q:"Steps of reassessment.",a:"Repeat the primary assessment, recheck vitals, reassess the chief complaint, and check the effect of interventions."},
+{c:"11",q:"Kussmaul vs Cheyne-Stokes vs agonal respirations.",a:"Kussmaul: deep and rapid (DKA). Cheyne-Stokes: deep then shallow, then apnea (stroke, head injury). Agonal: occasional gasps, inadequate."},
+{c:"11",q:"Flow rates and oxygen delivered: cannula vs nonrebreather.",a:"Cannula: 1–6 L/min, about 24–44%. NRB: 10–15 L/min, up to about 90%."},
+{c:"11",q:"Maximum suction times by age.",a:"Adults 15 seconds, children 10 seconds, infants 5 seconds."},
+{c:"11",q:"Rigid vs soft suction catheter.",a:"Rigid (Yankauer): mouth and oropharynx. Soft (French): nose, stoma, and hard-to-reach places."},
+{c:"11",q:"OPA vs NPA insertion.",a:"OPA (adult): upside down, then rotate 180°. NPA: size nose to earlobe, lubricate, bevel toward the septum."},
+{c:"11",q:"CPAP indications and contraindications.",a:"For: alert patient in respiratory distress (e.g., pulmonary edema, COPD) who can follow commands. Against: unresponsive or can’t protect airway, hypotension, pneumothorax, vomiting, facial trauma."},
+{c:"11",q:"How do you avoid gastric distention with a BVM?",a:"Give each breath over about 1 second, just enough for visible chest rise, and don’t overventilate."},
+{c:"12",q:"Medications EMTs carry vs assist with.",a:"Carry (per protocol): oxygen, oral glucose, aspirin, sometimes naloxone. Assist with patient’s own: nitroglycerin, inhaler, epinephrine auto-injector."},
+{c:"12",q:"Route for nitro, epinephrine auto-injector, oral glucose, albuterol.",a:"Sublingual; intramuscular (lateral thigh); oral; inhalation."},
+{c:"12",q:"Generic vs trade name.",a:"Generic: the standard drug name (albuterol). Trade: the brand name (Proventil)."},
+{c:"12",q:"Steps for an MDI.",a:"Confirm it’s theirs and allowed, shake, patient exhales, seals lips, presses and inhales deeply, holds breath. A spacer helps."},
+{c:"13",q:"What is the perfusion triangle?",a:"Heart (pump), blood vessels (container), blood (contents). Failure of any one causes shock."},
+{c:"13",q:"Four kinds of distributive shock.",a:"Anaphylactic, septic, neurogenic, and psychogenic (fainting)."},
+{c:"13",q:"What is Beck’s triad?",a:"JVD, muffled heart sounds, narrowing pulse pressure. Suggests cardiac tamponade."},
+{c:"13",q:"Three stages of shock.",a:"Compensated, decompensated, irreversible."},
+{c:"13",q:"Why is shock hard to recognize in children and older adults?",a:"Children compensate well, then crash. Older adults’ medications can mask a fast heart rate."},
+{c:"14",q:"Infant and child CPR: depth, ratios, pulse sites.",a:"At least one-third chest depth (about 1.5 in infants, 2 in children). 30:2 single rescuer, 15:2 two rescuers. Pulse: brachial (infant), carotid or femoral (child)."},
+{c:"14",q:"When do infants and children with a pulse need compressions?",a:"Heart rate under 60 with signs of poor perfusion despite good ventilation."},
+{c:"14",q:"AED special situations.",a:"Dry a wet chest, remove medication patches, avoid placing pads over implanted devices, use pediatric pads for children under 8 when available."},
+{c:"14",q:"Reasons to stop CPR.",a:"ROSC, transfer to equal or higher care, too exhausted to continue, scene unsafe, physician orders, or a valid DNR."},
+{c:"14",q:"Severe choking: adult, infant, pregnant patient.",a:"Adult: thrusts per your course. Infant: back slaps and chest thrusts. Late pregnancy or obese: chest thrusts. Unresponsive: CPR, look before breaths."},
+{c:"15",q:"Assessment of an unresponsive medical patient.",a:"Primary assessment, rapid full-body exam, vitals, then history from family or bystanders."},
+{c:"15",q:"Field impression vs diagnosis.",a:"Field impression: your working conclusion that guides care. Diagnosis: made at the hospital."},
+{c:"16",q:"Croup vs epiglottitis.",a:"Croup: gradual, barking cough, stridor, low fever. Epiglottitis: sudden high fever, drooling, tripod position; don’t look in the throat."},
+{c:"16",q:"Asthma vs COPD features.",a:"Asthma: wheezing, prolonged exhalation, often younger. COPD: long-term smoker, barrel chest, pursed-lip breathing."},
+{c:"16",q:"Risk factors and signs of pulmonary embolism.",a:"Long travel, surgery, immobility, birth control pills, smoking. Sudden dyspnea, sharp chest pain, tachycardia."},
+{c:"16",q:"Spontaneous pneumothorax: who and signs.",a:"Often tall, thin young men. Sudden sharp chest pain and decreased breath sounds on one side."},
+{c:"16",q:"Hyperventilation syndrome signs and care.",a:"Rapid breathing, tingling, hand spasms. Calm the patient, coach breathing, rule out serious causes, no paper bag."},
+{c:"16",q:"What does a silent chest mean in asthma?",a:"So little air is moving that wheezes disappear. Impending respiratory failure."},
+{c:"17",q:"Controllable vs uncontrollable cardiac risk factors.",a:"Controllable: smoking, high BP, high cholesterol, diabetes, obesity, inactivity. Uncontrollable: age, sex, family history."},
+{c:"17",q:"Left vs right heart failure.",a:"Left: fluid backs into the lungs (crackles, pulmonary edema). Right: JVD, leg and abdominal swelling."},
+{c:"17",q:"Signs of aortic dissection.",a:"Sudden tearing chest pain radiating to the back, different blood pressure in each arm."},
+{c:"17",q:"Shockable vs non-shockable rhythms.",a:"Shockable: ventricular fibrillation, pulseless ventricular tachycardia. Not shockable: asystole."},
+{c:"17",q:"What’s special about LVAD patients?",a:"They may have no palpable pulse; assess perfusion by mental status, skin, and breathing."},
+{c:"S",q:"Scenario D: 3-year-old, barking cough, stridor, low fever. Likely cause, care, and signs of worsening?",a:"Croup. Keep calm with parent, humidified or blow-by oxygen as indicated, transport. Worsening: drowsiness, retractions, quieter breathing, cyanosis."},
+{c:"S",q:"Scenario E: witnessed collapse, unresponsive, gasping. Sequence of care?",a:"Check breathing and pulse within 10 seconds, start compressions, attach AED, shock if advised and resume CPR right away, reassess after ROSC and transport."},
+{c:"S",q:"Scenario F: bee sting, hives, wheezing, BP 82/50. Shock type and treatment?",a:"Anaphylactic (distributive) shock. Help with her epinephrine auto-injector, support ABCs, reassess, consider a second dose per protocol."},
+{c:"S",q:"Scenario H: crackles, frothy sputum, orthopnea, SpO₂ 88%. Problem and care?",a:"Acute pulmonary edema from heart failure. Sit upright, oxygen, CPAP if alert with adequate BP per protocol, reassess, transport."},
+{c:"S",q:"Scenario I: two unresponsive patients in a garage with a running car. Priorities?",a:"Don’t enter; call fire. After removal: high-concentration oxygen, don’t trust SpO₂ (CO falsely raises it), ventilate if needed."},
+{c:"S",q:"Scenario J: infant with vomiting and diarrhea, sunken fontanelle, HR 180. Problem and care?",a:"Hypovolemic shock from dehydration. Brachial pulse, keep warm, support ABCs, prompt transport."}
+]);
+
+(function(){
+const $app=document.getElementById('app');
+const KEY='emt-midterm-drill-v1';
+let store={};
+try{store=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){store={};}
+store.stats=store.stats||{};
+const prefs=store.prefs||{};
+const S={
+  mode:prefs.mode||'mcq',
+  chs:new Set(Array.isArray(prefs.chs)?prefs.chs:ORDER),
+  count:prefs.count||25,
+  instant:prefs.instant!==false
+};
+let run=null;
+let resetArmed=false;
+
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store));}catch(e){}}
+function savePrefs(){store.prefs={mode:S.mode,chs:[...S.chs],count:S.count,instant:S.instant};save();}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function tri(p){
+  if(p>=0.85) return {cls:'g',word:'Solid',note:'Keep it fresh with a quick review.'};
+  if(p>=0.70) return {cls:'y',word:'Review',note:'Go over these before the exam.'};
+  return {cls:'r',word:'Study first',note:'Hit these chapters before anything else.'};
+}
+function prepMcq(q){const idx=shuffle([0,1,2,3]);return Object.assign({},q,{opts:idx.map(i=>q.o[i]),ans:idx.indexOf(0),pick:null});}
+function prepCard(c){return Object.assign({},c,{revealed:false,got:null});}
+const SCEN=MCQ.filter(q=>q.c==='S');
+const CASES=[...new Set(SCEN.map(q=>q.s))];
+
+function poolSize(){
+  if(S.mode==='scen') return SCEN.length;
+  const src=S.mode==='mcq'?MCQ:CARDS;
+  const n=src.filter(q=>S.chs.has(q.c)).length;
+  return S.count==='all'?n:Math.min(n,S.count);
+}
+function buildPool(){
+  if(S.mode==='scen') return shuffle(CASES).flatMap(s=>SCEN.filter(q=>q.s===s)).map(prepMcq);
+  const src=S.mode==='mcq'?MCQ:CARDS;
+  let p=shuffle(src.filter(q=>S.chs.has(q.c)));
+  if(S.count!=='all') p=p.slice(0,S.count);
+  return S.mode==='mcq'?p.map(prepMcq):p.map(prepCard);
+}
+function seg(k,opts,cur){
+  return `<div class="seg" role="group">${opts.map(([v,l])=>`<button type="button" data-act="set" data-k="${k}" data-v="${v}" aria-pressed="${String(v)===String(cur)}" class="${String(v)===String(cur)?'on':''}">${l}</button>`).join('')}</div>`;
+}
+
+function renderHome(){
+  run=null;
+  const weak=ORDER.filter(k=>{const s=store.stats[k];return s&&s.seen>=4&&s.correct/s.seen<0.7;});
+  const chips=ORDER.map(k=>{
+    const on=S.chs.has(k);const st=store.stats[k];let dot='';
+    if(st&&st.seen>=4){const p=st.correct/st.seen;const t=tri(p);dot=`<span class="dot ${t.cls}" aria-label="${t.word}, ${Math.round(p*100)} percent so far"></span>`;}
+    return `<button type="button" class="chip${on?' on':''}" data-act="chip" data-c="${k}" aria-pressed="${on}"><span class="num">${k==='S'?`${CASES[0]}–${CASES[CASES.length-1]}`:k}</span><span class="nm">${CH[k]}</span>${dot}</button>`;
+  }).join('');
+  const n=poolSize();
+  const unit=S.mode==='recall'?(n===1?'card':'cards'):(n===1?'question':'questions');
+  const hasStats=Object.keys(store.stats).length>0;
+  $app.innerHTML=`
+  <header class="top">
+    <h1>EMT midterm drill</h1>
+    <p class="sub">${MCQ.length} multiple-choice questions and ${CARDS.length} short-answer cards covering chapters 1–8 and 10–17, plus ${CASES.length} patient cases.</p>
+  </header>
+  ${weak.length?`<section class="weak"><p><strong>Weakest so far:</strong> ${weak.map(k=>esc(CH[k])).join(', ')}.</p><button type="button" class="link" data-act="weak">Drill only these</button></section>`:''}
+  <section class="block">
+    <h2>Format</h2>
+    ${seg('mode',[['mcq','Multiple choice'],['recall','Short answer'],['scen','Scenarios']],S.mode)}
+    <p class="help">${S.mode==='mcq'?'Pick the best answer. Options shuffle every time.':S.mode==='recall'?'Answer out loud or on paper, then reveal the key and grade yourself honestly.':`${CASES.length} patient cases worked step by step. Case order shuffles each time.`}</p>
+  </section>
+  ${S.mode!=='scen'?`
+  <section class="block">
+    <h2>Length</h2>
+    ${seg('count',[[10,'10'],[25,'25'],[50,'50'],[100,'100'],['all','All']],S.count)}
+  </section>`:''}
+  ${S.mode!=='recall'?`
+  <section class="block">
+    <h2>Feedback</h2>
+    ${seg('instant',[['1','After each question'],['0','At the end']],S.instant?'1':'0')}
+    <p class="help">${S.instant?'See the answer and why right after you pick.':'Exam conditions: no answers until you finish.'}</p>
+  </section>`:''}
+  ${S.mode!=='scen'?`
+  <section class="block">
+    <div class="h2row"><h2>Chapters</h2><span class="mini"><button type="button" class="link" data-act="all">All</button><button type="button" class="link" data-act="none">None</button></span></div>
+    <div class="chips">${chips}</div>
+    ${hasStats?`<p class="help">Dots show your running accuracy: green 85%+, yellow 70–84%, red under 70%.</p>`:''}
+  </section>`:''}
+  ${hasStats?`<p class="reset"><button type="button" class="link quiet" data-act="reset">${resetArmed?'Tap again to clear all progress':'Clear progress'}</button></p>`:''}
+  <div class="dock"><button type="button" class="primary" data-act="start" ${n?'':'disabled'}>${n?`Start ${n} ${unit}`:'Pick at least one chapter'}</button></div>`;
+}
+
+function start(items){
+  if(!items.length) return;
+  run={mode:S.mode==='recall'?'recall':'mcq',instant:S.instant,items,i:0};
+  renderQ();
+}
+
+function head(){
+  const n=run.items.length,i=run.i;
+  return `<div class="bar"><button type="button" class="link" data-act="quit">End drill</button><span class="count">${i+1} of ${n}</span></div>
+  <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${i}"><span style="width:${(i/n)*100}%"></span></div>`;
+}
+
+function renderQ(){
+  const q=run.items[run.i];
+  const last=run.i===run.items.length-1;
+  const stem=q.s?`<div class="stem"><p class="stem-h">Scenario ${q.s}</p><p>${esc(STEMS[q.s])}</p></div>`:'';
+  if(run.mode==='mcq'){
+    const answered=q.pick!==null;
+    const fb=run.instant&&answered;
+    const opts=q.opts.map((t,i)=>{
+      let cls='opt';
+      if(fb){cls+=i===q.ans?' right':i===q.pick?' wrong':' dim';}
+      else if(i===q.pick) cls+=' sel';
+      return `<button type="button" class="${cls}" data-act="pick" data-i="${i}" ${fb?'disabled':''} aria-pressed="${i===q.pick}"><span class="let">${'ABCD'[i]}</span><span class="txt">${esc(t)}</span></button>`;
+    }).join('');
+    const ok=q.pick===q.ans;
+    const feedback=fb?`<div class="fb ${ok?'ok':'no'}"><p class="verdict">${ok?'Correct.':`The answer is ${'ABCD'[q.ans]}.`}</p><p>${esc(q.e)}</p></div>`:'';
+    $app.innerHTML=`${head()}<p class="chap">${esc(CH[q.c])}</p>${stem}<h2 class="q">${esc(q.q)}</h2><div class="opts">${opts}</div><div aria-live="polite">${feedback}</div>
+    <div class="dock">${answered?`<button type="button" class="primary" data-act="next">${last?'See results':'Next question'}</button>`:`<p class="dock-hint">${run.instant?'Tap an answer':'Tap an answer. You can change it before moving on.'}</p>`}</div>`;
+  } else {
+    $app.innerHTML=`${head()}<p class="chap">${esc(CH[q.c])}</p><h2 class="q">${esc(q.q)}</h2>
+    ${q.revealed?`<div class="answer" aria-live="polite"><p class="ans-h">Key points</p><p>${esc(q.a)}</p></div>`:`<p class="help">Say or write your answer first.</p>`}
+    <div class="dock">${q.revealed?`<div class="two"><button type="button" class="grade miss" data-act="miss">Missed it</button><button type="button" class="grade got" data-act="got">Got it</button></div>`:`<button type="button" class="primary" data-act="reveal">Show answer</button>`}</div>`;
+  }
+}
+
+function okItem(it){return run.mode==='mcq'?it.pick===it.ans:it.got===true;}
+function doneItem(it){return run.mode==='mcq'?it.pick!==null:it.got!==null;}
+
+function finish(){
+  const done=run.items.filter(doneItem);
+  if(!done.length){renderHome();return;}
+  done.forEach(it=>{const s=store.stats[it.c]||(store.stats[it.c]={seen:0,correct:0});s.seen++;if(okItem(it))s.correct++;});
+  save();
+  run.done=done;run.missed=done.filter(it=>!okItem(it));
+  renderResults();
+}
+
+function renderResults(){
+  const total=run.done.length,right=total-run.missed.length,p=right/total,t=tri(p);
+  const by={};run.done.forEach(it=>{const b=by[it.c]||(by[it.c]={n:0,r:0});b.n++;if(okItem(it))b.r++;});
+  const rows=ORDER.filter(k=>by[k]).map(k=>({k,...by[k],p:by[k].r/by[k].n})).sort((a,b)=>a.p-b.p);
+  const tags=rows.map(r=>{const tt=tri(r.p);return `<li class="mtag ${tt.cls}"><span class="mhole" aria-hidden="true"></span><span class="mname">${esc(CH[r.k])}</span><span class="mscore">${r.r}/${r.n}</span><span class="sr">${tt.word}</span></li>`;}).join('');
+  const missed=run.missed.map(it=>{
+    if(run.mode==='mcq'){
+      return `<li class="miss-item"><p class="mchap">${esc(CH[it.c])}${it.s?`, scenario ${it.s}`:''}</p><p class="mq">${esc(it.q)}</p>
+      <p class="yours">You picked: ${esc(it.opts[it.pick])}</p><p class="correct">Answer: ${esc(it.opts[it.ans])}</p><p class="why">${esc(it.e)}</p></li>`;
+    }
+    return `<li class="miss-item"><p class="mchap">${esc(CH[it.c])}</p><p class="mq">${esc(it.q)}</p><p class="correct">${esc(it.a)}</p></li>`;
+  }).join('');
+  $app.innerHTML=`
+  <div class="tag ${t.cls}">
+    <span class="hole" aria-hidden="true"></span>
+    <p class="tag-word">${t.word}</p>
+    <p class="tag-score">${Math.round(p*100)}%</p>
+    <p class="tag-note">${right} of ${total} correct. ${t.note}</p>
+  </div>
+  ${rows.length>1?`<section class="block"><h2>By chapter</h2><ul class="mtags">${tags}</ul></section>`:''}
+  ${run.missed.length?`<section class="block"><h2>Review what you missed</h2><ol class="missed">${missed}</ol></section>`:`<p class="clean">Nothing missed. Try a longer drill or switch format.</p>`}
+  <div class="dock"><div class="two">
+    <button type="button" class="ghost" data-act="home">New drill</button>
+    ${run.missed.length?`<button type="button" class="primary" data-act="retry">Retry ${run.missed.length} missed</button>`:`<button type="button" class="primary" data-act="again">Go again</button>`}
+  </div></div>`;
+  window.scrollTo(0,0);
+}
+
+$app.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b||b.disabled)return;
+  const a=b.dataset.act;
+  if(a!=='reset') resetArmed=false;
+  switch(a){
+    case 'set':{const k=b.dataset.k;let v=b.dataset.v;if(k==='count')v=v==='all'?'all':+v;if(k==='instant')v=v==='1';S[k]=v;savePrefs();renderHome();break;}
+    case 'chip':{const c=b.dataset.c;S.chs.has(c)?S.chs.delete(c):S.chs.add(c);savePrefs();renderHome();break;}
+    case 'all':S.chs=new Set(ORDER);savePrefs();renderHome();break;
+    case 'none':S.chs=new Set();savePrefs();renderHome();break;
+    case 'weak':{S.mode='mcq';S.chs=new Set(ORDER.filter(k=>{const s=store.stats[k];return s&&s.seen>=4&&s.correct/s.seen<0.7;}));S.count='all';savePrefs();start(buildPool());window.scrollTo(0,0);break;}
+    case 'reset':if(resetArmed){store.stats={};save();resetArmed=false;}else{resetArmed=true;}renderHome();break;
+    case 'start':start(buildPool());window.scrollTo(0,0);break;
+    case 'pick':{const q=run.items[run.i];if(run.instant&&q.pick!==null)return;q.pick=+b.dataset.i;renderQ();break;}
+    case 'next':run.i++;if(run.i>=run.items.length)finish();else{renderQ();window.scrollTo(0,0);}break;
+    case 'reveal':run.items[run.i].revealed=true;renderQ();break;
+    case 'got':case 'miss':run.items[run.i].got=(a==='got');run.i++;if(run.i>=run.items.length)finish();else{renderQ();window.scrollTo(0,0);}break;
+    case 'quit':finish();break;
+    case 'retry':{const m=run.mode,inst=run.instant;const items=shuffle(run.missed).map(it=>m==='mcq'?prepMcq(it):prepCard(it));run={mode:m,instant:inst,items,i:0};renderQ();window.scrollTo(0,0);break;}
+    case 'again':start(buildPool());window.scrollTo(0,0);break;
+    case 'home':renderHome();window.scrollTo(0,0);break;
+  }
+});
+
+document.addEventListener('keydown',e=>{
+  if(!run||e.metaKey||e.ctrlKey||e.altKey)return;
+  const q=run.items[run.i];if(!q)return;
+  if(run.mode==='mcq'&&/^[1-4a-dA-D]$/.test(e.key)){
+    const i=/\d/.test(e.key)?+e.key-1:'abcd'.indexOf(e.key.toLowerCase());
+    const btn=$app.querySelector(`[data-act="pick"][data-i="${i}"]`);if(btn&&!btn.disabled)btn.click();
+  } else if(e.key==='Enter'){
+    const btn=$app.querySelector('[data-act="next"],[data-act="reveal"]');if(btn&&document.activeElement===document.body)btn.click();
+  }
+});
+
+renderHome();
+})();
+
+</script>
+</body>
+</html>
